@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import LegalShell from '../components/LegalShell.astro';
+---
+
+<Base title="Datenschutz – Pospurtal" description="Datenschutzerklärung des Posaunenquartetts Pospurtal.">
+  <Nav />
+  <main>
+    <LegalShell title="Datenschutz">
+      <h2>Datenschutz auf einen Blick</h2>
+      <p>
+        Der Schutz Ihrer persönlichen Daten ist uns wichtig. Diese Website
+        verarbeitet personenbezogene Daten nur im technisch notwendigen Umfang.
+      </p>
+
+      <h2>Verantwortliche Stelle</h2>
+      <p>
+        Pospurtal – Das Rheinhessische Posaunenquartett<br />
+        E-Mail: <a href="mailto:hallo@pospurtal.de">hallo@pospurtal.de</a>
+      </p>
+
+      <h2>Kontaktaufnahme</h2>
+      <p>
+        Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben zur Bearbeitung
+        der Anfrage und für mögliche Anschlussfragen gespeichert. Diese Daten
+        geben wir nicht ohne Ihre Einwilligung weiter.
+      </p>
+
+      <h2>Ihre Rechte</h2>
+      <p>
+        Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und
+        Einschränkung der Verarbeitung Ihrer gespeicherten Daten sowie ein
+        Beschwerderecht bei der zuständigen Aufsichtsbehörde.
+      </p>
+
+      <p class="muted">
+        Hinweis: Bitte ersetzen Sie diese Vorlage durch die vollständige,
+        rechtskonforme Datenschutzerklärung aus der bestehenden Website (inkl.
+        Hosting, Fonts, Cookies und eingesetzten Diensten).
+      </p>
+    </LegalShell>
+  </main>
+  <Footer />
+</Base>

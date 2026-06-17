@@ -1,0 +1,155 @@
+---
+const base = import.meta.env.BASE_URL;
+const links = [
+  { href: '#konzerte', label: 'Konzerte' },
+  { href: '#musiker', label: 'Musiker' },
+  { href: '#medien', label: 'Medien' },
+  { href: '#kontakt', label: 'Kontakt' },
+];
+---
+
+<header class="nav" id="nav">
+  <div class="nav-inner container">
+    <a href="#top" class="nav-brand" aria-label="Pospurtal Startseite">
+      <img src={`${base}images/logo_white.webp`} alt="Pospurtal" width="150" height="40" />
+    </a>
+
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <a href="#kontakt" class="btn btn-primary nav-cta">Anfragen</a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="nav-mobile" id="navMobile">
+    {links.map((l) => <a href={l.href} class="nav-mobile-link">{l.label}</a>)}
+    <a href="#kontakt" class="btn btn-primary nav-mobile-cta">Anfragen</a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), backdrop-filter 0.4s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(20, 17, 16, 0.82);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--line-soft);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: 74px;
+  }
+  .nav-brand img { height: 34px; width: auto; transition: opacity 0.3s; }
+  .nav-brand:hover img { opacity: 0.82; }
+
+  .nav-links {
+    display: flex;
+    gap: 2.2rem;
+    margin-inline: auto;
+  }
+  .nav-links a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-soft);
+    position: relative;
+    padding-block: 0.4rem;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1.5px;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta { padding: 0.62rem 1.4rem; font-size: 0.9rem; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px; height: 44px;
+    background: none; border: none;
+    z-index: 110;
+  }
+  .nav-toggle span {
+    display: block;
+    height: 2px; width: 26px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.35s var(--ease), opacity 0.25s;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 13, 12, 0.97);
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease);
+  }
+  .nav-mobile.open { opacity: 1; pointer-events: auto; }
+  .nav-mobile-link {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--text);
+  }
+  .nav-mobile-cta { margin-top: 1rem; }
+
+  @media (max-width: 860px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-toggle { display: flex; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav');
+  const toggle = document.getElementById('navToggle');
+  const mobile = document.getElementById('navMobile');
+
+  const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = mobile?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobile?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      mobile.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    })
+  );
+</script>

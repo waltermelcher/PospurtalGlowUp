@@ -1,0 +1,129 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="projekt section" id="projekt">
+  <div class="container">
+    <div class="projekt-card" data-reveal>
+      <div class="projekt-media">
+        <img src={`${base}images/breitbild_2.webp`} alt="Musiktheater – Wenn es Rosen sind, werden sie blühen" loading="lazy" />
+        <div class="projekt-media-overlay"></div>
+      </div>
+
+      <div class="projekt-body">
+        <p class="eyebrow">Sonderprojekt · Musiktheater</p>
+        <h2 class="projekt-title">Wenn es Rosen sind,<br />werden sie blühen.</h2>
+        <p class="projekt-tag">Ein Musiktheater über Aufbruch &amp; Widerstand</p>
+
+        <p class="projekt-text">
+          „Wenn es Rosen sind, werden sie blühen“ ist ein Musiktheater über Georg
+          Büchner und seinen Kampf für Demokratie. Seine Worte sind zeitlos — sie
+          rütteln auf, fordern heraus und halten der Gesellschaft einen Spiegel vor.
+          Die Neuinszenierung für Posaunenquartett, Schauspiel und Gesangssolist
+          bringt Büchners Gedanken mit kraftvoller Intensität auf die Bühne.
+        </p>
+        <p class="projekt-text">
+          Pospurtal bringt gemeinsam mit Schauspieler Christian Suhr, Bariton
+          Johannes Hill sowie den Komponisten Prof. Birger Petersen und Prof.
+          Immanuel Ott diese außergewöhnliche Inszenierung auf die Bühne — ein
+          künstlerisches Ereignis, das Geschichte und Gegenwart eindrucksvoll
+          verbindet.
+        </p>
+
+        <div class="projekt-cast">
+          <span>Christian Suhr · Schauspiel</span>
+          <span>Johannes Hill · Bariton</span>
+          <span>Prof. Birger Petersen &amp; Prof. Immanuel Ott · Komposition</span>
+        </div>
+
+        <div class="projekt-support">
+          <p>
+            Um dieses ambitionierte Projekt zu realisieren, suchen wir Sponsoren
+            und Unterstützer, die Kultur, Demokratie und künstlerische Innovation
+            fördern möchten.
+          </p>
+          <a href="#kontakt" class="btn btn-primary">
+            Projekt unterstützen
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projekt-card {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 50px 100px -40px rgba(0,0,0,0.8);
+  }
+  .projekt-media { position: relative; min-height: 100%; }
+  .projekt-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    min-height: 340px;
+  }
+  .projekt-media-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(115deg, transparent 55%, var(--bg-3) 99%),
+                linear-gradient(0deg, rgba(20,17,16,0.4), transparent 50%);
+  }
+
+  .projekt-body { padding: clamp(2rem, 5vw, 4rem); }
+  .projekt-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    margin: 1.1rem 0 0.7rem;
+  }
+  .projekt-tag {
+    color: var(--brass-soft);
+    font-size: 1.05rem;
+    font-style: italic;
+    font-family: var(--font-serif);
+    margin-bottom: 1.6rem;
+  }
+  .projekt-text { color: var(--text-soft); margin-bottom: 1.1rem; font-size: 1.02rem; }
+
+  .projekt-cast {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.8rem 0;
+    padding: 1.3rem 0;
+    border-block: 1px solid var(--line-soft);
+  }
+  .projekt-cast span {
+    font-size: 0.92rem;
+    color: var(--text);
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .projekt-cast span::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.6em;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--brass);
+  }
+
+  .projekt-support {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    align-items: flex-start;
+  }
+  .projekt-support p { color: var(--text-soft); font-size: 0.98rem; }
+
+  @media (max-width: 880px) {
+    .projekt-card { grid-template-columns: 1fr; }
+    .projekt-media img { min-height: 260px; }
+    .projekt-media-overlay {
+      background: linear-gradient(0deg, var(--bg-3) 2%, transparent 60%);
+    }
+  }
+</style>

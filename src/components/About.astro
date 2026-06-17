@@ -1,0 +1,132 @@
+---
+const base = import.meta.env.BASE_URL;
+const stats = [
+  { num: '2017', label: 'gegründet' },
+  { num: '4', label: 'Stimmen' },
+  { num: '∞', label: 'Repertoire' },
+];
+---
+
+<section class="about section" id="ueber">
+  <div class="container about-grid">
+    <div class="about-media" data-reveal>
+      <img src={`${base}images/selfie.webp`} alt="Das Quartett Pospurtal" loading="lazy" width="900" height="700" />
+      <div class="about-badge">
+        <span class="about-badge-num">2017</span>
+        <span class="about-badge-label">aus Freude<br />am Musizieren</span>
+      </div>
+    </div>
+
+    <div class="about-text" data-reveal>
+      <p class="eyebrow">Über uns</p>
+      <h2>Posaunenklang zwischen<br />Tradition und Vielfalt</h2>
+      <p class="about-lead">
+        Das Posaunen-Quartett Pospurtal wurde 2017 aus der Freude am gemeinsamen
+        Musizieren und der Faszination für den warmen, kraftvollen Klang der
+        Posaune gegründet.
+      </p>
+      <p class="about-body">
+        Seitdem begeistert das Ensemble mit seinem breiten Repertoire, das von
+        klassischer Musik für Posaune über Jazz und Filmmusik bis hin zu modernen
+        Arrangements reicht. Ob feierliche Anlässe, Konzerte oder besondere
+        Events — das Quartett bringt mit seinen vier Stimmen die ganze Vielfalt der
+        Posaunenmusik zum Klingen.
+      </p>
+      <p class="about-body">
+        Lassen Sie sich mitreißen von satten Harmonien, strahlenden Fanfaren und
+        sanften Klangfarben, die Gänsehaut garantieren. Pospurtal sorgt für einen
+        einzigartigen musikalischen Moment, den Sie so schnell nicht vergessen
+        werden.
+      </p>
+
+      <div class="about-stats">
+        {stats.map((s) => (
+          <div class="about-stat">
+            <span class="about-stat-num">{s.num}</span>
+            <span class="about-stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+    align-items: center;
+  }
+  .about-media { position: relative; }
+  .about-media img {
+    width: 100%;
+    border-radius: var(--radius);
+    aspect-ratio: 4 / 3.2;
+    object-fit: cover;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.7);
+  }
+  .about-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    pointer-events: none;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -26px; right: -16px;
+    background: linear-gradient(135deg, var(--brass-soft), var(--brass-deep));
+    color: #1A1408;
+    padding: 1.1rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 20px 40px -16px var(--brass-glow);
+  }
+  .about-badge-num { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; line-height: 1; }
+  .about-badge-label { font-size: 0.78rem; font-weight: 600; line-height: 1.3; }
+
+  .about-text h2 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    margin: 1.1rem 0 1.4rem;
+  }
+  .about-lead {
+    font-size: 1.28rem;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.55;
+    margin-bottom: 1.3rem;
+  }
+  .about-body { color: var(--text-soft); margin-bottom: 1.1rem; }
+
+  .about-stats {
+    display: flex;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: 2.4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line-soft);
+  }
+  .about-stat { display: flex; flex-direction: column; }
+  .about-stat-num {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--brass-soft);
+    line-height: 1;
+  }
+  .about-stat-label {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-mute);
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 860px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-badge { right: 16px; }
+  }
+</style>

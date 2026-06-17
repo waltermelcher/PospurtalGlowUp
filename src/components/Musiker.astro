@@ -1,0 +1,117 @@
+---
+const base = import.meta.env.BASE_URL;
+const members = [
+  {
+    name: 'Thomas Keßler',
+    role: 'Musikalischer Koordinator',
+    img: `${base}images/portrait_kessler.webp`,
+    bio: 'Thomas Keßler ist ein leidenschaftlicher Posaunist mit einem feinen Gespür für Klang und Präzision. Als musikalischer Koordinator von Pospurtal sorgt er für die Auswahl des Repertoires und die Organisation der Proben. Sein virtuoses Spiel, insbesondere in den hohen Lagen, verleiht dem Quartett eine strahlende Brillanz.',
+  },
+  {
+    name: 'Michael Pausch',
+    role: 'Qualitätssicherung',
+    img: `${base}images/portrait_pausch.webp`,
+    bio: 'Michael Pausch bringt als erfahrener Posaunist Struktur und Klarheit in das Ensemble. Mit einem feinen Ohr für Details und einem hohen Anspruch an musikalische Qualität unterstützt er Pospurtal als kritisches und motivierendes Mitglied. Seine pädagogische Erfahrung fließt in jede Probe ein.',
+  },
+  {
+    name: 'Walter Melcher',
+    role: 'Kommunikation & Marketing',
+    img: `${base}images/portrait_melcher.webp`,
+    bio: 'Walter Melcher bereichert Pospurtal seit 2024 mit seinem facettenreichen Spiel und seiner musikalischen Vielseitigkeit. Trotz weiter Anreise ist seine Leidenschaft für die Posaune in jeder Probe spürbar. Seine klangliche Präzision macht ihn zu einer unverzichtbaren Säule des Ensembles.',
+  },
+  {
+    name: 'Stephan Müller',
+    role: 'Bassposaune',
+    img: `${base}images/portrait_mueller.webp`,
+    bio: 'Stephan Müller überzeugt mit tiefen, kraftvollen Klängen auf der Bassposaune. Seine Begeisterung für Musik und sein erfrischender Enthusiasmus bringen Dynamik und Tiefe ins Quartett. Mit seinem vollen, warmen Sound trägt er wesentlich zur klanglichen Basis des Ensembles bei.',
+  },
+];
+---
+
+<section class="musiker section" id="musiker">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Musiker</p>
+      <h2>Vier Posaunisten mit viel Leidenschaft</h2>
+      <p class="lead">Jede Stimme bringt ihren eigenen Charakter — gemeinsam formen sie den Klang von Pospurtal.</p>
+    </div>
+
+    <div class="musiker-grid">
+      {members.map((m) => (
+        <article class="musiker-card" data-reveal>
+          <div class="musiker-photo">
+            <img src={m.img} alt={`Portrait ${m.name}`} loading="lazy" width="500" height="600" />
+          </div>
+          <div class="musiker-info">
+            <span class="musiker-role">{m.role}</span>
+            <h3 class="musiker-name">{m.name}</h3>
+            <p class="musiker-bio">{m.bio}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .musiker-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.2rem, 2.5vw, 1.8rem);
+  }
+  .musiker-card {
+    background: var(--bg-3);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    display: flex;
+    flex-direction: column;
+  }
+  .musiker-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--line);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8);
+  }
+  .musiker-photo {
+    position: relative;
+    aspect-ratio: 1 / 1.12;
+    overflow: hidden;
+  }
+  .musiker-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(0.25) contrast(1.02);
+    transition: transform 0.7s var(--ease), filter 0.7s var(--ease);
+  }
+  .musiker-card:hover .musiker-photo img {
+    transform: scale(1.05);
+    filter: grayscale(0) contrast(1.05);
+  }
+  .musiker-photo::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(34,29,26,0.9) 0%, transparent 45%);
+  }
+  .musiker-info { padding: 1.3rem 1.4rem 1.6rem; }
+  .musiker-role {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--brass-soft);
+    font-weight: 600;
+  }
+  .musiker-name {
+    font-size: 1.5rem;
+    margin: 0.4rem 0 0.8rem;
+  }
+  .musiker-bio { font-size: 0.92rem; color: var(--text-soft); line-height: 1.6; }
+
+  @media (max-width: 980px) {
+    .musiker-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .musiker-grid { grid-template-columns: 1fr; }
+  }
+</style>

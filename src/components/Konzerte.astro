@@ -1,0 +1,152 @@
+---
+const concerts = [
+  {
+    day: '01', month: 'Mai', year: '2026', time: '19:30 Uhr',
+    city: 'Asperg', region: 'Ludwigsburg',
+    program: 'Romantisches Konzert mit Orgel',
+    venue: 'Michaelskirche', address: 'Uhlandstr. 3, 71679 Asperg',
+  },
+  {
+    day: '02', month: 'Mai', year: '2026', time: '17:00 Uhr',
+    city: 'Sindelfingen', region: '',
+    program: 'Romantisches Konzert mit Orgel',
+    venue: 'Martinskirche', address: 'Stiftstraße 1, 71063 Sindelfingen',
+  },
+  {
+    day: '30', month: 'Sep', year: '2026', time: '18:00 Uhr',
+    city: 'Mainz', region: '',
+    program: 'Wenn es Rosen sind, werden sie blühen',
+    venue: 'Johannes Gutenberg-Universität Mainz', address: 'Jakob-Welder-Weg 28, 55128 Mainz',
+  },
+  {
+    day: '03', month: 'Okt', year: '2026', time: '18:00 Uhr',
+    city: 'Groß-Gerau', region: '',
+    program: 'Wenn es Rosen sind, werden sie blühen',
+    venue: 'Kreistag Groß-Gerau', address: 'Wilhelm-Seipp-Straße 4, 64521 Groß-Gerau',
+  },
+];
+---
+
+<section class="konzerte section" id="konzerte">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Konzerte</p>
+      <h2>Pospurtal live erleben</h2>
+      <p class="lead">Erleben Sie das Quartett auf der Bühne — kommende Termine im Überblick.</p>
+    </div>
+
+    <ul class="konzert-list">
+      {concerts.map((c) => (
+        <li class="konzert" data-reveal>
+          <div class="konzert-date">
+            <span class="konzert-day">{c.day}</span>
+            <span class="konzert-month">{c.month}</span>
+            <span class="konzert-year">{c.year}</span>
+          </div>
+          <div class="konzert-main">
+            <h3 class="konzert-program">{c.program}</h3>
+            <p class="konzert-venue">{c.venue}{c.address ? ` · ${c.address}` : ''}</p>
+          </div>
+          <div class="konzert-meta">
+            <span class="konzert-city">{c.city}{c.region ? ` (${c.region})` : ''}</span>
+            <span class="konzert-time">{c.time}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .konzerte { background: var(--bg-2); border-block: 1px solid var(--line-soft); }
+
+  .konzert-list { list-style: none; }
+  .konzert {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: clamp(1.2rem, 4vw, 3rem);
+    align-items: center;
+    padding: 1.9rem 1.6rem;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
+    position: relative;
+  }
+  .konzert + .konzert { border-top: 1px solid var(--line-soft); border-radius: 0; }
+  .konzert:hover {
+    background: var(--bg-3);
+    border-color: var(--line);
+    border-radius: var(--radius);
+    transform: translateX(4px);
+  }
+  .konzert:hover + .konzert { border-top-color: transparent; }
+
+  .konzert-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.4rem 0;
+    border-right: 1px solid var(--line-soft);
+  }
+  .konzert-day {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 0.9;
+    color: var(--brass-soft);
+  }
+  .konzert-month {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text);
+    margin-top: 0.3rem;
+  }
+  .konzert-year { font-size: 0.78rem; color: var(--text-mute); margin-top: 0.15rem; }
+
+  .konzert-program {
+    font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  .konzert-venue { color: var(--text-soft); font-size: 0.98rem; }
+
+  .konzert-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 0.3rem;
+    white-space: nowrap;
+  }
+  .konzert-city {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .konzert-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--brass-soft);
+    background: rgba(201,162,39,0.1);
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  @media (max-width: 720px) {
+    .konzert {
+      grid-template-columns: 76px 1fr;
+      grid-template-areas: "date main" "date meta";
+      row-gap: 0.6rem;
+      padding: 1.5rem 0.4rem;
+    }
+    .konzert-date { grid-area: date; }
+    .konzert-main { grid-area: main; }
+    .konzert-meta { grid-area: meta; align-items: flex-start; text-align: left; flex-direction: row; gap: 0.8rem; }
+    .konzert-day { font-size: 2.2rem; }
+    .konzert:hover { transform: none; }
+  }
+</style>

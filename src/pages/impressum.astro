@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import LegalShell from '../components/LegalShell.astro';
+---
+
+<Base title="Impressum – Pospurtal" description="Impressum des Posaunenquartetts Pospurtal.">
+  <Nav />
+  <main>
+    <LegalShell title="Impressum">
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>Pospurtal – Das Rheinhessische Posaunenquartett</p>
+
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href="mailto:hallo@pospurtal.de">hallo@pospurtal.de</a></p>
+
+      <h2>Verantwortlich für den Inhalt</h2>
+      <p>Walter Melcher (Kommunikation &amp; Marketing)</p>
+
+      <p class="muted">
+        Hinweis: Bitte ergänzen Sie hier die vollständigen, rechtlich
+        erforderlichen Angaben (Anschrift, ggf. USt-IdNr., verantwortliche Person
+        nach § 18 Abs. 2 MStV) aus dem bestehenden Impressum.
+      </p>
+    </LegalShell>
+  </main>
+  <Footer />
+</Base>

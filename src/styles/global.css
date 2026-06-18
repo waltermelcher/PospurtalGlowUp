@@ -28,7 +28,7 @@
   /* Layout */
   --maxw: 1200px;
   --pad: clamp(1.25rem, 5vw, 4rem);
-  --radius: 14px;
+  --radius: 0px;   /* eckiges Design – keine Rundungen */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -116,7 +116,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 0.6rem;
   padding: 0.95rem 1.8rem;
-  border-radius: 999px;
+  border-radius: 0;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -167,22 +167,3 @@ h1, h2, h3 {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: #3a322a; border-radius: 10px; border: 3px solid var(--bg); }
 ::-webkit-scrollbar-thumb:hover { background: var(--brass-deep); }
-
-/* ============================================================
-   EXPERIMENT · Scharfe Ecken (keine Rundungen)
-   Zum Zurücksetzen einfach diesen gesamten Block entfernen.
-   ============================================================ */
-:root { --radius: 0px; }   /* trifft alle Karten/Medien via var(--radius) */
-
-/* Boxen, Buttons, Pills & Medien mit fest gesetzten Rundungen */
-.btn,
-.konzert-time,
-.projekt-card,
-.rosen-title mark,
-.gallery-vlabel,
-.lightbox-img,
-.lightbox-video iframe,
-.kontakt-mail {
-  border-radius: 0 !important;
-}
-/* Kreisförmige Icon-Badges (Social, Play, Zoom) bleiben bewusst rund. */

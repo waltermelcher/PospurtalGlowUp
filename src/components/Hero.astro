@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL;
   </div>
 
   <div class="hero-content container">
-    <p class="eyebrow hero-eyebrow">Rheinhessisches Posaunenquartett · seit 2017</p>
+    <p class="eyebrow hero-eyebrow">Rheinhessisches Posaunenquartett</p>
     <h1 class="hero-title">
       <span>Pospurtal</span>
     </h1>
@@ -69,9 +69,12 @@ const base = import.meta.env.BASE_URL;
     padding-top: 5rem;
   }
   .hero-eyebrow {
+    font-size: 0.98rem;
+    letter-spacing: 0.24em;
     opacity: 0;
     animation: fadeUp 0.9s var(--ease) 0.3s forwards;
   }
+  .hero-eyebrow::before { display: none; }
   .hero-title {
     font-size: clamp(3.6rem, 16vw, 11rem);
     font-weight: 600;

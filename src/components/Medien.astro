@@ -18,6 +18,14 @@ const photos = [
     </div>
 
     <div class="gallery">
+      <button class="gallery-item wide gallery-video" data-reveal data-video="7SDy23zIOMA" aria-label="Video abspielen: Bruckner – Scherzo">
+        <img src={`${base}images/video_bruckner.webp`} alt="Pospurtal spielt Anton Bruckner – Scherzo (Video)" loading="lazy" />
+        <span class="gallery-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+        </span>
+        <span class="gallery-vlabel">Video · Bruckner „Scherzo“</span>
+      </button>
+
       {photos.map((p) => (
         <button class={`gallery-item ${p.span}`} data-reveal data-full={p.src} aria-label="Bild vergrößern">
           <img src={p.src} alt={p.alt} loading="lazy" />
@@ -31,7 +39,8 @@ const photos = [
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lightbox-close" id="lightboxClose" aria-label="Schließen">&times;</button>
-    <img id="lightboxImg" src="" alt="" />
+    <img id="lightboxImg" class="lightbox-img" src="" alt="" />
+    <div id="lightboxVideo" class="lightbox-video"></div>
   </div>
 </section>
 
@@ -86,6 +95,40 @@ const photos = [
   .gallery-zoom svg { width: 20px; height: 20px; }
   .gallery-item:hover .gallery-zoom { opacity: 1; transform: none; }
 
+  /* --- Video-Kachel --- */
+  .gallery-video img { filter: brightness(0.62); }
+  .gallery-video:hover img { filter: brightness(0.72); }
+  .gallery-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 74px; height: 74px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brass-soft), var(--brass-deep));
+    color: #1A1408;
+    box-shadow: 0 14px 36px -8px rgba(0,0,0,0.7);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .gallery-play svg { width: 30px; height: 30px; margin-left: 3px; }
+  .gallery-video:hover .gallery-play {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 18px 44px -8px var(--brass-glow);
+  }
+  .gallery-vlabel {
+    position: absolute;
+    left: 16px; bottom: 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    background: rgba(20,17,16,0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--line-soft);
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+  }
+
   .lightbox {
     position: fixed; inset: 0;
     z-index: 200;
@@ -100,7 +143,7 @@ const photos = [
     transition: opacity 0.35s var(--ease);
   }
   .lightbox.open { opacity: 1; pointer-events: auto; }
-  .lightbox img {
+  .lightbox-img {
     max-width: 100%;
     max-height: 88vh;
     border-radius: 8px;
@@ -108,7 +151,23 @@ const photos = [
     transform: scale(0.96);
     transition: transform 0.4s var(--ease);
   }
-  .lightbox.open img { transform: scale(1); }
+  .lightbox.open .lightbox-img { transform: scale(1); }
+
+  .lightbox-video {
+    display: none;
+    width: min(92vw, 1280px);
+    aspect-ratio: 16 / 9;
+    max-height: 86vh;
+  }
+  .lightbox.video-mode .lightbox-img { display: none; }
+  .lightbox.video-mode .lightbox-video { display: block; }
+  .lightbox-video :global(iframe) {
+    width: 100%; height: 100%;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 40px 100px -20px rgba(0,0,0,0.9);
+  }
+
   .lightbox-close {
     position: absolute;
     top: 1.4rem; right: 1.8rem;
@@ -124,30 +183,50 @@ const photos = [
     .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
     .gallery-item.wide { grid-column: span 2; }
     .gallery-item.tall { grid-row: span 2; }
+    .gallery-play { width: 60px; height: 60px; }
+    .gallery-play svg { width: 24px; height: 24px; }
   }
 </style>
 
 <script>
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightboxImg') as HTMLImageElement | null;
+  const lbVideo = document.getElementById('lightboxVideo');
   const close = document.getElementById('lightboxClose');
 
-  const open = (src: string) => {
+  const openImg = (src: string) => {
     if (!lb || !lbImg) return;
+    lb.classList.remove('video-mode');
     lbImg.src = src;
     lb.classList.add('open');
     lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   };
+
+  const openVideo = (id: string) => {
+    if (!lb || !lbVideo) return;
+    lbVideo.innerHTML =
+      `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" ` +
+      `title="YouTube-Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ` +
+      `allowfullscreen></iframe>`;
+    lb.classList.add('open', 'video-mode');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
   const hide = () => {
     if (!lb) return;
-    lb.classList.remove('open');
+    lb.classList.remove('open', 'video-mode');
     lb.setAttribute('aria-hidden', 'true');
+    if (lbVideo) lbVideo.innerHTML = '';
     document.body.style.overflow = '';
   };
 
   document.querySelectorAll<HTMLElement>('.gallery-item').forEach((el) =>
-    el.addEventListener('click', () => open(el.dataset.full || ''))
+    el.addEventListener('click', () => {
+      if (el.dataset.video) openVideo(el.dataset.video);
+      else openImg(el.dataset.full || '');
+    })
   );
   close?.addEventListener('click', hide);
   lb?.addEventListener('click', (e) => { if (e.target === lb) hide(); });

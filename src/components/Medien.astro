@@ -1,11 +1,14 @@
 ---
 const base = import.meta.env.BASE_URL;
-const photos = [
-  { src: `${base}images/breitbild_1.webp`, span: 'wide', alt: 'Pospurtal im Konzert' },
-  { src: `${base}images/hochkant_1.webp`, span: 'tall', alt: 'Pospurtal Posaunist' },
-  { src: `${base}images/breitbild_4.webp`, span: 'normal', alt: 'Pospurtal bei der Probe' },
-  { src: `${base}images/breitbild_5.webp`, span: 'normal', alt: 'Pospurtal Auftritt' },
-  { src: `${base}images/breitbild_2.webp`, span: 'wide', alt: 'Pospurtal Ensemble' },
+const items = [
+  { type: 'video', id: '7SDy23zIOMA', thumb: `${base}images/video_bruckner.webp`, span: 'wide', label: 'Bruckner „Scherzo“', alt: 'Pospurtal spielt Anton Bruckner – Scherzo (Video)' },
+  { type: 'photo', src: `${base}images/breitbild_1.webp`, span: 'wide', alt: 'Pospurtal im Konzert' },
+  { type: 'photo', src: `${base}images/hochkant_1.webp`, span: 'tall', alt: 'Pospurtal Posaunist' },
+  { type: 'video', id: 'ZUWr3f4E9ps', thumb: `${base}images/video_konzert1.webp`, span: 'normal', label: 'Konzert 1', alt: 'Pospurtal Konzert 1 (Video)' },
+  { type: 'video', id: 'eWSrBnh1ttM', thumb: `${base}images/video_konzert2.webp`, span: 'normal', label: 'Konzert 2', alt: 'Pospurtal Konzert 2 (Video)' },
+  { type: 'photo', src: `${base}images/breitbild_4.webp`, span: 'normal', alt: 'Pospurtal bei der Probe' },
+  { type: 'photo', src: `${base}images/breitbild_5.webp`, span: 'normal', alt: 'Pospurtal Auftritt' },
+  { type: 'photo', src: `${base}images/breitbild_2.webp`, span: 'wide', alt: 'Pospurtal Ensemble' },
 ];
 ---
 
@@ -18,17 +21,17 @@ const photos = [
     </div>
 
     <div class="gallery">
-      <button class="gallery-item wide gallery-video" data-reveal data-video="7SDy23zIOMA" aria-label="Video abspielen: Bruckner – Scherzo">
-        <img src={`${base}images/video_bruckner.webp`} alt="Pospurtal spielt Anton Bruckner – Scherzo (Video)" loading="lazy" />
-        <span class="gallery-play" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-        </span>
-        <span class="gallery-vlabel">Video · Bruckner „Scherzo“</span>
-      </button>
-
-      {photos.map((p) => (
-        <button class={`gallery-item ${p.span}`} data-reveal data-full={p.src} aria-label="Bild vergrößern">
-          <img src={p.src} alt={p.alt} loading="lazy" />
+      {items.map((it) => it.type === 'video' ? (
+        <button class={`gallery-item ${it.span} gallery-video`} data-reveal data-video={it.id} aria-label={`Video abspielen: ${it.label}`}>
+          <img src={it.thumb} alt={it.alt} loading="lazy" />
+          <span class="gallery-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+          </span>
+          <span class="gallery-vlabel">Video · {it.label}</span>
+        </button>
+      ) : (
+        <button class={`gallery-item ${it.span}`} data-reveal data-full={it.src} aria-label="Bild vergrößern">
+          <img src={it.src} alt={it.alt} loading="lazy" />
           <span class="gallery-zoom" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>
           </span>

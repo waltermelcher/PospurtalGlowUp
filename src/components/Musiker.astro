@@ -43,7 +43,6 @@ const members = [
             <img src={m.img} alt={`Portrait ${m.name}`} loading="lazy" width="500" height="600" />
           </div>
           <div class="musiker-info">
-            <span class="musiker-role">{m.role}</span>
             <h3 class="musiker-name">{m.name}</h3>
             <p class="musiker-bio">{m.bio}</p>
           </div>
@@ -95,16 +94,9 @@ const members = [
     background: linear-gradient(0deg, rgba(34,29,26,0.9) 0%, transparent 45%);
   }
   .musiker-info { padding: 1.3rem 1.4rem 1.6rem; }
-  .musiker-role {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: var(--brass-soft);
-    font-weight: 600;
-  }
   .musiker-name {
     font-size: 1.5rem;
-    margin: 0.4rem 0 0.8rem;
+    margin: 0 0 0.8rem;
   }
   .musiker-bio { font-size: 0.92rem; color: var(--text-soft); line-height: 1.6; }
 

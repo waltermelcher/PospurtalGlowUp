@@ -14,6 +14,11 @@ const {
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL(`${base}images/header.webp`, Astro.site).toString();
+
+// Nur auf diesen (Produktions-)Domains darf indexiert werden.
+// Auf allen anderen Hosts (GitHub-Pages-Vorschau, Preview, localhost) wird
+// per Skript automatisch ein noindex gesetzt – ohne manuelles Umschalten.
+const productionHosts = ['pospurtal.de', 'www.pospurtal.de'];
 ---
 
 <!DOCTYPE html>
@@ -24,6 +29,23 @@ const ogImage = new URL(`${base}images/header.webp`, Astro.site).toString();
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    <!-- Indexierung nur auf der Produktions-Domain; sonst automatisch noindex -->
+    <script is:inline define:vars={{ productionHosts }}>
+      (function () {
+        var isProd = productionHosts.indexOf(location.hostname) !== -1;
+        if (!isProd) {
+          var robots = document.createElement('meta');
+          robots.name = 'robots';
+          robots.content = 'noindex, nofollow';
+          document.head.appendChild(robots);
+        } else {
+          // Auf Produktion die Canonical-URL auf die echte Domain setzen
+          var canon = document.querySelector('link[rel="canonical"]');
+          if (canon) canon.setAttribute('href', location.origin + location.pathname);
+        }
+      })();
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

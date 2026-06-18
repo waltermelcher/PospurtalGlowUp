@@ -138,15 +138,32 @@ const concerts = [
 
   @media (max-width: 720px) {
     .konzert {
-      grid-template-columns: 76px 1fr;
+      grid-template-columns: 56px 1fr;
       grid-template-areas: "date main" "date meta";
-      row-gap: 0.6rem;
-      padding: 1.5rem 0.4rem;
+      column-gap: 0.9rem;
+      row-gap: 0.7rem;
+      padding: 1.4rem 0.25rem;
+      align-items: start;
     }
-    .konzert-date { grid-area: date; }
-    .konzert-main { grid-area: main; }
-    .konzert-meta { grid-area: meta; align-items: flex-start; text-align: left; flex-direction: row; gap: 0.8rem; }
-    .konzert-day { font-size: 2.2rem; }
+    .konzert-date {
+      grid-area: date;
+      border-right: none;
+      padding-top: 0.25rem;
+    }
+    .konzert-day { font-size: 1.95rem; }
+    .konzert-month { font-size: 0.78rem; letter-spacing: 0.12em; }
+    .konzert-main { grid-area: main; min-width: 0; }
+    .konzert-program { font-size: 1.18rem; overflow-wrap: anywhere; }
+    .konzert-meta {
+      grid-area: meta;
+      min-width: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      text-align: left;
+      white-space: normal;
+      gap: 0.5rem 0.8rem;
+    }
     .konzert:hover { transform: none; }
   }
 </style>

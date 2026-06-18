@@ -140,6 +140,43 @@ const base = import.meta.env.BASE_URL;
     from { opacity: 0; transform: translateY(30px); }
     to   { opacity: 1; transform: none; }
   }
+  /* --- Mobile: gestapeltes Layout, ganzes Foto (alle 4 Musiker) sichtbar --- */
+  @media (max-width: 700px) {
+    .hero {
+      min-height: auto;
+      flex-direction: column;
+      align-items: stretch;
+      padding-top: 110px;       /* unter der fixierten Navigation */
+      padding-bottom: 3.2rem;
+    }
+    .hero-bg {
+      position: relative;
+      inset: auto;
+      width: 100%;
+    }
+    .hero-bg img {
+      height: auto;
+      aspect-ratio: 5120 / 3413; /* exaktes Bildverhältnis → vollständiges Foto, kein Beschnitt */
+      object-fit: cover;
+      object-position: center;
+      animation: none;
+    }
+    /* nur dezenter Übergang an der Unterkante ins Dunkle */
+    .hero-overlay {
+      background: linear-gradient(180deg, rgba(20,17,16,0) 72%, var(--bg) 100%);
+    }
+    .hero-vignette { display: none; }
+
+    .hero-content {
+      position: relative;
+      padding-top: 2rem;
+    }
+    .hero-title { font-size: clamp(3.2rem, 19vw, 5rem); }
+    .hero-sub { font-size: 1.1rem; }
+    .hero-actions { margin-top: 2rem; }
+    .hero-scroll { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-bg img, .hero-eyebrow, .hero-title span, .hero-sub, .hero-actions, .hero-scroll {
       animation: none !important; opacity: 1 !important; transform: none !important;

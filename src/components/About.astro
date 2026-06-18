@@ -1,10 +1,5 @@
 ---
 const base = import.meta.env.BASE_URL;
-const stats = [
-  { num: '2017', label: 'gegründet' },
-  { num: '4', label: 'Stimmen' },
-  { num: '∞', label: 'Repertoire' },
-];
 ---
 
 <section class="about section" id="ueber">
@@ -34,15 +29,6 @@ const stats = [
         einzigartigen musikalischen Moment, den Sie so schnell nicht vergessen
         werden.
       </p>
-
-      <div class="about-stats">
-        {stats.map((s) => (
-          <div class="about-stat">
-            <span class="about-stat-num">{s.num}</span>
-            <span class="about-stat-label">{s.label}</span>
-          </div>
-        ))}
-      </div>
     </div>
   </div>
 </section>
@@ -82,29 +68,6 @@ const stats = [
     margin-bottom: 1.3rem;
   }
   .about-body { color: var(--text-soft); margin-bottom: 1.1rem; }
-
-  .about-stats {
-    display: flex;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    margin-top: 2.4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--line-soft);
-  }
-  .about-stat { display: flex; flex-direction: column; }
-  .about-stat-num {
-    font-family: var(--font-serif);
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: var(--brass-soft);
-    line-height: 1;
-  }
-  .about-stat-label {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--text-mute);
-    margin-top: 0.5rem;
-  }
 
   @media (max-width: 860px) {
     .about-grid { grid-template-columns: 1fr; }

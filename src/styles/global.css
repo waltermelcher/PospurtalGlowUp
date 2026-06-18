@@ -167,3 +167,22 @@ h1, h2, h3 {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: #3a322a; border-radius: 10px; border: 3px solid var(--bg); }
 ::-webkit-scrollbar-thumb:hover { background: var(--brass-deep); }
+
+/* ============================================================
+   EXPERIMENT · Scharfe Ecken (keine Rundungen)
+   Zum Zurücksetzen einfach diesen gesamten Block entfernen.
+   ============================================================ */
+:root { --radius: 0px; }   /* trifft alle Karten/Medien via var(--radius) */
+
+/* Boxen, Buttons, Pills & Medien mit fest gesetzten Rundungen */
+.btn,
+.konzert-time,
+.projekt-card,
+.rosen-title mark,
+.gallery-vlabel,
+.lightbox-img,
+.lightbox-video iframe,
+.kontakt-mail {
+  border-radius: 0 !important;
+}
+/* Kreisförmige Icon-Badges (Social, Play, Zoom) bleiben bewusst rund. */

@@ -1,129 +1,200 @@
 ---
-const base = import.meta.env.BASE_URL;
 ---
 
 <section class="projekt section" id="projekt">
-  <div class="container">
-    <div class="projekt-card" data-reveal>
-      <div class="projekt-media">
-        <img src={`${base}images/breitbild_2.webp`} alt="Musiktheater – Wenn es Rosen sind, werden sie blühen" loading="lazy" />
-        <div class="projekt-media-overlay"></div>
+  <!-- Grunge-/Marmor-Textur -->
+  <svg class="projekt-noise" preserveAspectRatio="none" aria-hidden="true">
+    <filter id="rosenMarble">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="11" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+    <filter id="rosenGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+    <rect class="noise-marble" width="100%" height="100%" filter="url(#rosenMarble)" />
+    <rect class="noise-grain" width="100%" height="100%" filter="url(#rosenGrain)" />
+  </svg>
+  <div class="projekt-vignette" aria-hidden="true"></div>
+
+  <div class="container projekt-inner">
+    <span class="rosen-eyebrow" data-reveal>Sonderprojekt · Musiktheater</span>
+
+    <h2 class="rosen-title" data-reveal>
+      Wenn es <mark>Rosen</mark> sind,<br />werden sie <mark>blühen</mark>
+    </h2>
+
+    <p class="rosen-sub" data-reveal>
+      Ein musikalisch-theatrales Stück über Georg Büchner,<br class="sub-br" />
+      den »Hessischen Landboten« und den Kampf für Demokratie
+    </p>
+
+    <div class="rosen-detail" data-reveal>
+      <p class="rosen-text">
+        „Wenn es Rosen sind, werden sie blühen“ ist ein Musiktheater über Georg
+        Büchner und seinen Kampf für Demokratie. Seine Worte sind zeitlos — sie
+        rütteln auf, fordern heraus und halten der Gesellschaft einen Spiegel vor.
+        Die Neuinszenierung für Posaunenquartett, Schauspiel und Gesangssolist
+        bringt Büchners Gedanken mit kraftvoller Intensität auf die Bühne.
+      </p>
+      <p class="rosen-text">
+        Pospurtal bringt gemeinsam mit Schauspieler Christian Suhr, Bariton
+        Johannes Hill sowie den Komponisten Prof. Birger Petersen und Prof.
+        Immanuel Ott diese außergewöhnliche Inszenierung auf die Bühne — ein
+        künstlerisches Ereignis, das Geschichte und Gegenwart eindrucksvoll
+        verbindet.
+      </p>
+
+      <div class="rosen-cast">
+        <span>Christian Suhr · Schauspiel</span>
+        <span>Johannes Hill · Bariton</span>
+        <span>Prof. Birger Petersen &amp; Prof. Immanuel Ott · Komposition</span>
       </div>
 
-      <div class="projekt-body">
-        <p class="eyebrow">Sonderprojekt · Musiktheater</p>
-        <h2 class="projekt-title">Wenn es Rosen sind,<br />werden sie blühen.</h2>
-        <p class="projekt-tag">Ein Musiktheater über Aufbruch &amp; Widerstand</p>
-
-        <p class="projekt-text">
-          „Wenn es Rosen sind, werden sie blühen“ ist ein Musiktheater über Georg
-          Büchner und seinen Kampf für Demokratie. Seine Worte sind zeitlos — sie
-          rütteln auf, fordern heraus und halten der Gesellschaft einen Spiegel vor.
-          Die Neuinszenierung für Posaunenquartett, Schauspiel und Gesangssolist
-          bringt Büchners Gedanken mit kraftvoller Intensität auf die Bühne.
+      <div class="rosen-support">
+        <p>
+          Um dieses ambitionierte Projekt zu realisieren, suchen wir Sponsoren
+          und Unterstützer, die Kultur, Demokratie und künstlerische Innovation
+          fördern möchten.
         </p>
-        <p class="projekt-text">
-          Pospurtal bringt gemeinsam mit Schauspieler Christian Suhr, Bariton
-          Johannes Hill sowie den Komponisten Prof. Birger Petersen und Prof.
-          Immanuel Ott diese außergewöhnliche Inszenierung auf die Bühne — ein
-          künstlerisches Ereignis, das Geschichte und Gegenwart eindrucksvoll
-          verbindet.
-        </p>
-
-        <div class="projekt-cast">
-          <span>Christian Suhr · Schauspiel</span>
-          <span>Johannes Hill · Bariton</span>
-          <span>Prof. Birger Petersen &amp; Prof. Immanuel Ott · Komposition</span>
-        </div>
-
-        <div class="projekt-support">
-          <p>
-            Um dieses ambitionierte Projekt zu realisieren, suchen wir Sponsoren
-            und Unterstützer, die Kultur, Demokratie und künstlerische Innovation
-            fördern möchten.
-          </p>
-          <a href="#kontakt" class="btn btn-primary">
-            Projekt unterstützen
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
+        <a href="#kontakt" class="btn btn-rosa">
+          Projekt unterstützen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .projekt-card {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    background: var(--bg-3);
-    border: 1px solid var(--line);
-    border-radius: 20px;
+  .projekt {
+    position: relative;
+    background: #0a0908;
+    border-block: 1px solid rgba(236, 111, 190, 0.14);
     overflow: hidden;
-    box-shadow: 0 50px 100px -40px rgba(0,0,0,0.8);
-  }
-  .projekt-media { position: relative; min-height: 100%; }
-  .projekt-media img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    min-height: 340px;
-  }
-  .projekt-media-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(115deg, transparent 55%, var(--bg-3) 99%),
-                linear-gradient(0deg, rgba(20,17,16,0.4), transparent 50%);
+    isolation: isolate;
   }
 
-  .projekt-body { padding: clamp(2rem, 5vw, 4rem); }
-  .projekt-title {
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    margin: 1.1rem 0 0.7rem;
+  /* --- Textur --- */
+  .projekt-noise {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
   }
-  .projekt-tag {
-    color: var(--brass-soft);
-    font-size: 1.05rem;
-    font-style: italic;
-    font-family: var(--font-serif);
+  .noise-marble { opacity: 0.06; }
+  .noise-grain  { opacity: 0.05; }
+  .projekt-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(120% 90% at 50% 38%, transparent 30%, rgba(0,0,0,0.55) 100%),
+      radial-gradient(60% 50% at 50% 40%, rgba(236,111,190,0.10), transparent 70%);
+  }
+
+  /* --- Inhalt --- */
+  .projekt-inner {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rosen-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #EC6FBE;
     margin-bottom: 1.6rem;
   }
-  .projekt-text { color: var(--text-soft); margin-bottom: 1.1rem; font-size: 1.02rem; }
 
-  .projekt-cast {
+  .rosen-title {
+    font-family: var(--font-serif);
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+    font-size: clamp(2.3rem, 7vw, 5.2rem);
+    max-width: 14ch;
+  }
+  .rosen-title mark {
+    background: #EC6FBE;
+    color: #fff;
+    padding: 0.04em 0.26em;
+    margin: 0 0.04em;
+    border-radius: 2px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .rosen-sub {
+    margin-top: 1.8rem;
+    color: #EDE7DD;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+    line-height: 1.5;
+    max-width: 46ch;
+  }
+
+  /* --- Detailblock --- */
+  .rosen-detail {
+    margin-top: clamp(2.8rem, 6vw, 4.5rem);
+    max-width: 720px;
+    text-align: left;
+  }
+  .rosen-text {
+    color: var(--text-soft);
+    margin-bottom: 1.1rem;
+    font-size: 1.04rem;
+  }
+
+  .rosen-cast {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin: 1.8rem 0;
-    padding: 1.3rem 0;
-    border-block: 1px solid var(--line-soft);
+    gap: 0.55rem;
+    margin: 2rem 0;
+    padding: 1.4rem 0;
+    border-block: 1px solid rgba(236, 111, 190, 0.2);
   }
-  .projekt-cast span {
-    font-size: 0.92rem;
+  .rosen-cast span {
+    font-size: 0.94rem;
     color: var(--text);
-    padding-left: 1.1rem;
+    padding-left: 1.2rem;
     position: relative;
   }
-  .projekt-cast span::before {
+  .rosen-cast span::before {
     content: "";
     position: absolute;
-    left: 0; top: 0.6em;
-    width: 5px; height: 5px;
+    left: 0; top: 0.58em;
+    width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--brass);
+    background: #EC6FBE;
   }
 
-  .projekt-support {
+  .rosen-support {
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 1.4rem;
     align-items: flex-start;
   }
-  .projekt-support p { color: var(--text-soft); font-size: 0.98rem; }
+  .rosen-support p { color: var(--text-soft); font-size: 1rem; }
 
-  @media (max-width: 880px) {
-    .projekt-card { grid-template-columns: 1fr; }
-    .projekt-media img { min-height: 260px; }
-    .projekt-media-overlay {
-      background: linear-gradient(0deg, var(--bg-3) 2%, transparent 60%);
-    }
+  /* --- Pink Button --- */
+  .btn-rosa {
+    background: linear-gradient(135deg, #F58FD2, #EC6FBE 55%, #C9509F);
+    color: #fff;
+    box-shadow: 0 10px 30px -10px rgba(236, 111, 190, 0.45);
+  }
+  .btn-rosa:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -10px rgba(236, 111, 190, 0.55);
+  }
+
+  @media (max-width: 600px) {
+    .sub-br { display: none; }
   }
 </style>

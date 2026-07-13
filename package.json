@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "build:prod": "DEPLOY_TARGET=hostinger astro build",
+    "build:prod": "DEPLOY_TARGET=production astro build",
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro"

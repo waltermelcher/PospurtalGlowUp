@@ -41,7 +41,7 @@ export const programme: Programm[] = [
     werke: {
       heading: 'Zu hören sind unter anderem',
       items: [
-        { komponist: 'Johann Sebastian Bach', titel: 'Fuge d-Moll' },
+        { komponist: 'Johann Sebastian Bach', titel: 'Fuge d-moll' },
         { komponist: 'Pierre Max Dubois', titel: 'Quatuor' },
         { komponist: 'Eugène Bozza', titel: 'Trois Pièces' },
         { komponist: 'Jan Koetsier', titel: 'Max und Moritz' },
@@ -68,7 +68,7 @@ export const programme: Programm[] = [
       items: [
         { komponist: 'Richard Wagner', titel: 'Gebet der Elisabeth' },
         { komponist: 'Felix Mendelssohn Bartholdy', titel: 'Lobgesang, op. 52' },
-        { komponist: 'Anton Bruckner', titel: 'Scherzo aus der 1. Symphonie c-Moll' },
+        { komponist: 'Anton Bruckner', titel: 'Scherzo aus der 1. Symphonie c-moll' },
         { komponist: 'Zsolt Gárdonyi', titel: 'Fantasie' },
       ],
     },

@@ -19,7 +19,7 @@ import { programme } from '../data/programme';
     <Hero />
     <About />
     <Konzerte />
-    {programme.map((p, i) => <ProgrammSection {...p} reverse={i % 2 === 1} />)}
+    {programme.map((p, i) => <ProgrammSection {...p} alternate={i % 2 === 1} />)}
     <Projekt />
     <Musiker />
     <Medien />

@@ -3,10 +3,13 @@ export interface Programm {
   eyebrow: string;
   title: string;
   tagline: string;
+  /** Bild bzw. – bei gesetztem `video` – dessen Vorschaubild */
   image: string;
   imageAlt: string;
   width: number;
   height: number;
+  /** Optionale YouTube-ID: zeigt statt des Bildes ein abspielbares Video */
+  video?: string;
   paragraphs: string[];
 }
 
@@ -31,10 +34,11 @@ export const programme: Programm[] = [
     eyebrow: 'Programm',
     title: 'Romantische Konzerte',
     tagline: 'Posaunenquartett und Orgel',
-    image: 'breitbild_4.webp',
-    imageAlt: 'Pospurtal an der Orgelempore',
-    width: 1000,
-    height: 563,
+    image: 'video_bruckner.webp',
+    imageAlt: 'Video: Pospurtal spielt Anton Bruckner – Scherzo',
+    width: 1280,
+    height: 720,
+    video: '7SDy23zIOMA',
     paragraphs: [
       'Wenn vier Posaunen auf eine Orgel treffen, entsteht eine Klangfülle, die an ein ganzes Orchester erinnert. Im Romantischen Konzert verbindet sich der warme, samtige Ton des Quartetts mit der räumlichen Kraft der Orgel, vom zartesten Pianissimo bis zum festlichen Tutti, das den Kirchenraum bis in den letzten Winkel füllt.',
       'Auf dem Programm stehen romantische und klassische Werke sowie berühmte Bearbeitungen, die eigens für diese Besetzung eine ganz neue Klangsprache entfalten. Vertraute Melodien erklingen in ungewohnter Farbe, große Musik wird auf besondere Weise neu erlebbar.',

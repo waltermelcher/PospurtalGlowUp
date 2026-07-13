@@ -2,53 +2,77 @@
 import type { Programm } from '../data/programme';
 
 export interface Props extends Programm {
-  /** true = Bild links, Text rechts (alternierendes Layout) */
-  reverse?: boolean;
+  /** true = Bild/Video links, Text rechts + abgesetzter Hintergrund */
+  alternate?: boolean;
 }
 
 const {
-  id, eyebrow, title, tagline, image, imageAlt, width, height, paragraphs,
-  reverse = false,
+  id, eyebrow, title, tagline, image, imageAlt, width, height, video, paragraphs,
+  alternate = false,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
+const ratio = `${width} / ${height}`;
 ---
 
-<section class:list={['programm', 'section', { reverse }]} id={id}>
+<section class:list={['programm', 'section', { alt: alternate }]} id={id}>
   <div class="container programm-grid">
     <div class="programm-text" data-reveal>
       <p class="eyebrow">{eyebrow}</p>
       <h2>{title}</h2>
       <p class="programm-tag">{tagline}</p>
       {paragraphs.map((text) => <p class="programm-body">{text}</p>)}
+
+      <a href="#kontakt" class="btn btn-primary programm-cta">
+        Anfragen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
 
     <div class="programm-media" data-reveal>
-      <img
-        src={`${base}images/${image}`}
-        alt={imageAlt}
-        loading="lazy"
-        width={width}
-        height={height}
-        style={`aspect-ratio: ${width} / ${height};`}
-      />
+      {video ? (
+        <button
+          class="programm-video"
+          data-video={video}
+          style={`aspect-ratio: ${ratio};`}
+          aria-label={`Video abspielen: ${title}`}
+        >
+          <img src={`${base}images/${image}`} alt={imageAlt} loading="lazy" width={width} height={height} />
+          <span class="programm-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+          </span>
+        </button>
+      ) : (
+        <img
+          src={`${base}images/${image}`}
+          alt={imageAlt}
+          loading="lazy"
+          width={width}
+          height={height}
+          style={`aspect-ratio: ${ratio};`}
+        />
+      )}
     </div>
   </div>
 </section>
 
 <style>
+  /* Abgesetzte Variante: eigener Hintergrund + Trennlinien */
+  .programm.alt {
+    background: var(--bg-2);
+    border-block: 1px solid var(--line-soft);
+  }
+
   .programm-grid {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: clamp(2.5rem, 6vw, 5.5rem);
     align-items: center;
   }
-  /* Bild links, Text rechts */
-  .programm.reverse .programm-grid {
-    grid-template-columns: 0.95fr 1.05fr;
-  }
-  .programm.reverse .programm-text { order: 2; }
-  .programm.reverse .programm-media { order: 1; }
+  /* Medien links, Text rechts */
+  .programm.alt .programm-grid { grid-template-columns: 0.95fr 1.05fr; }
+  .programm.alt .programm-text { order: 2; }
+  .programm.alt .programm-media { order: 1; }
 
   .programm-text h2 {
     font-size: clamp(2rem, 5vw, 3.4rem);
@@ -67,14 +91,18 @@ const base = import.meta.env.BASE_URL;
     color: var(--text-soft);
     margin-bottom: 1.1rem;
   }
+  .programm-cta { margin-top: 1.6rem; }
 
   .programm-media { position: relative; }
-  .programm-media img {
+  .programm-media img,
+  .programm-media :global(iframe) {
+    display: block;
     width: 100%;
     border-radius: var(--radius);
     object-fit: cover;
     box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
   }
+  .programm-media :global(iframe) { border: 0; }
   .programm-media::after {
     content: "";
     position: absolute;
@@ -84,13 +112,68 @@ const base = import.meta.env.BASE_URL;
     pointer-events: none;
   }
 
+  /* --- Video-Vorschau (Klick startet den Player) --- */
+  .programm-video {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: var(--bg-3);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .programm-video img {
+    height: 100%;
+    filter: brightness(0.62);
+    transition: filter 0.5s var(--ease), transform 0.7s var(--ease);
+    box-shadow: none;
+  }
+  .programm-video:hover img { filter: brightness(0.75); transform: scale(1.04); }
+  .programm-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 74px; height: 74px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brass-soft), var(--brass-deep));
+    color: #1A1408;
+    box-shadow: 0 14px 36px -8px rgba(0, 0, 0, 0.7);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .programm-play svg { width: 30px; height: 30px; margin-left: 3px; }
+  .programm-video:hover .programm-play {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 18px 44px -8px var(--brass-glow);
+  }
+
   @media (max-width: 860px) {
     .programm-grid,
-    .programm.reverse .programm-grid { grid-template-columns: 1fr; }
-    /* auf Mobile immer Bild oben, Text darunter */
+    .programm.alt .programm-grid { grid-template-columns: 1fr; }
+    /* auf Mobile immer Medien oben, Text darunter */
     .programm .programm-media,
-    .programm.reverse .programm-media { order: 1; }
+    .programm.alt .programm-media { order: 1; }
     .programm .programm-text,
-    .programm.reverse .programm-text { order: 2; }
+    .programm.alt .programm-text { order: 2; }
+    .programm-play { width: 60px; height: 60px; }
+    .programm-play svg { width: 24px; height: 24px; }
   }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.programm-video').forEach((el) => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.video;
+      if (!id) return;
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      frame.title = 'YouTube-Video';
+      frame.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen = true;
+      frame.style.aspectRatio = el.style.aspectRatio;
+      el.replaceWith(frame);
+    });
+  });
+</script>

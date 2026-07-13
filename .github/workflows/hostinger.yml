@@ -19,6 +19,10 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Secrets duerfen in if-Bedingungen nicht direkt geprueft werden – deshalb
+    # der Umweg ueber die Umgebung.
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,11 +43,11 @@ jobs:
         run: npm run build:prod
 
       - name: Hinweis, solange die Zugangsdaten fehlen
-        if: ${{ secrets.FTP_SERVER == '' }}
+        if: env.FTP_SERVER == ''
         run: echo "::warning::FTP-Zugangsdaten fehlen (Secrets FTP_SERVER/FTP_USERNAME/FTP_PASSWORD). Es wurde nichts hochgeladen."
 
       - name: Per FTPS zu Hostinger hochladen
-        if: ${{ secrets.FTP_SERVER != '' }}
+        if: env.FTP_SERVER != ''
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}

@@ -4,12 +4,13 @@ import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Konzerte from '../components/Konzerte.astro';
-import Programm from '../components/Programm.astro';
+import ProgrammSection from '../components/ProgrammSection.astro';
 import Projekt from '../components/Projekt.astro';
 import Musiker from '../components/Musiker.astro';
 import Medien from '../components/Medien.astro';
 import Kontakt from '../components/Kontakt.astro';
 import Footer from '../components/Footer.astro';
+import { programme } from '../data/programme';
 ---
 
 <Base>
@@ -18,7 +19,7 @@ import Footer from '../components/Footer.astro';
     <Hero />
     <About />
     <Konzerte />
-    <Programm />
+    {programme.map((p, i) => <ProgrammSection {...p} reverse={i % 2 === 1} />)}
     <Projekt />
     <Musiker />
     <Medien />

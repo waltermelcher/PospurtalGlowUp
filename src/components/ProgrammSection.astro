@@ -1,0 +1,96 @@
+---
+import type { Programm } from '../data/programme';
+
+export interface Props extends Programm {
+  /** true = Bild links, Text rechts (alternierendes Layout) */
+  reverse?: boolean;
+}
+
+const {
+  id, eyebrow, title, tagline, image, imageAlt, width, height, paragraphs,
+  reverse = false,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+---
+
+<section class:list={['programm', 'section', { reverse }]} id={id}>
+  <div class="container programm-grid">
+    <div class="programm-text" data-reveal>
+      <p class="eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      <p class="programm-tag">{tagline}</p>
+      {paragraphs.map((text) => <p class="programm-body">{text}</p>)}
+    </div>
+
+    <div class="programm-media" data-reveal>
+      <img
+        src={`${base}images/${image}`}
+        alt={imageAlt}
+        loading="lazy"
+        width={width}
+        height={height}
+        style={`aspect-ratio: ${width} / ${height};`}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .programm-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+    align-items: center;
+  }
+  /* Bild links, Text rechts */
+  .programm.reverse .programm-grid {
+    grid-template-columns: 0.95fr 1.05fr;
+  }
+  .programm.reverse .programm-text { order: 2; }
+  .programm.reverse .programm-media { order: 1; }
+
+  .programm-text h2 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    margin: 1.1rem 0 1rem;
+  }
+  .programm-tag {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+    color: var(--brass-soft);
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .programm-body {
+    color: var(--text-soft);
+    margin-bottom: 1.1rem;
+  }
+
+  .programm-media { position: relative; }
+  .programm-media img {
+    width: 100%;
+    border-radius: var(--radius);
+    object-fit: cover;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+  }
+  .programm-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    pointer-events: none;
+  }
+
+  @media (max-width: 860px) {
+    .programm-grid,
+    .programm.reverse .programm-grid { grid-template-columns: 1fr; }
+    /* auf Mobile immer Bild oben, Text darunter */
+    .programm .programm-media,
+    .programm.reverse .programm-media { order: 1; }
+    .programm .programm-text,
+    .programm.reverse .programm-text { order: 2; }
+  }
+</style>

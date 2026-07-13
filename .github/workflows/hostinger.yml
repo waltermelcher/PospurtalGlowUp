@@ -4,9 +4,9 @@ name: Deploy to Hostinger
 # sie per FTPS zu Hostinger. Damit kann der falsche Build gar nicht mehr live
 # gehen: Der Upload passiert nur, wenn Typpruefung und Build sauber sind.
 
+# Nur noch manuell: Die Seite zieht zu Cloudflare um. Bleibt als Rueckfallebene,
+# solange die Domain noch auf Hostinger zeigt.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       neu_aufsetzen:

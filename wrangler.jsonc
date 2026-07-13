@@ -1,0 +1,17 @@
+{
+  // Statische Seite auf Cloudflare Workers: kein Server, kein Astro-Adapter.
+  // "main" fehlt bewusst – dadurch ist das ein reiner Static-Assets-Worker,
+  // der nur die Dateien aus dist/ ausliefert.
+  //
+  // Cloudflare-Projekteinstellungen dazu:
+  //   Build command:  npm run build:prod
+  //   Deploy command: npx wrangler deploy
+  "name": "pospurtal",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist",
+    // /impressum liefert dist/impressum/index.html aus
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

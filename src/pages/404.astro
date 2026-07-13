@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import LegalShell from '../components/LegalShell.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Seite nicht gefunden – Pospurtal" description="Diese Seite existiert nicht.">
+  <Nav />
+  <main>
+    <LegalShell title="Seite nicht gefunden">
+      <p>
+        Diese Seite gibt es nicht (mehr). Vielleicht hat sich ein Tippfehler in die
+        Adresse geschlichen, oder der Link ist veraltet.
+      </p>
+      <p>
+        <a href={base}>Zurück zur Startseite</a> – dort finden Sie die kommenden
+        Konzerttermine, unsere Programme und den Kontakt.
+      </p>
+    </LegalShell>
+  </main>
+  <Footer />
+</Base>

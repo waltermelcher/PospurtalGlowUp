@@ -41,7 +41,7 @@ export const programme: Programm[] = [
     werke: {
       heading: 'Zu hören sind unter anderem',
       items: [
-        { komponist: 'Johann Sebastian Bach', titel: 'Fugue in D minor' },
+        { komponist: 'Johann Sebastian Bach', titel: 'Fuge d-Moll' },
         { komponist: 'Pierre Max Dubois', titel: 'Quatuor' },
         { komponist: 'Eugène Bozza', titel: 'Trois Pièces' },
         { komponist: 'Jan Koetsier', titel: 'Max und Moritz' },

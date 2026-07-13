@@ -38,6 +38,15 @@ export const programme: Programm[] = [
       'Dabei zeigt sich, was die Posaune alles kann: mal festlich und strahlend, mal lyrisch und zart, mal groovend und mit einem Augenzwinkern. Das Jubiläumsprogramm ist so bunt wie das Repertoire, das sich in zehn Jahren angesammelt hat, und zeigt das Instrument von einer Seite, die viele im Publikum so noch nicht erlebt haben.',
       'Ein Konzert zum Feiern, Staunen und Wiederentdecken für alle, die Pospurtal seit Jahren begleiten, und für alle, die das Quartett zum ersten Mal hören.',
     ],
+    werke: {
+      heading: 'Zu hören sind unter anderem',
+      items: [
+        { komponist: 'Johann Sebastian Bach', titel: 'Fugue in D minor' },
+        { komponist: 'Pierre Max Dubois', titel: 'Quatuor' },
+        { komponist: 'Eugène Bozza', titel: 'Trois Pièces' },
+        { komponist: 'Jan Koetsier', titel: 'Max und Moritz' },
+      ],
+    },
   },
   {
     id: 'romantische-konzerte',

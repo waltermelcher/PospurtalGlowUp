@@ -8,6 +8,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      neu_aufsetzen:
+        description: 'Zielordner auf Hostinger vorher leeren und alles neu hochladen'
+        type: boolean
+        default: false
 
 concurrency:
   group: hostinger
@@ -57,8 +62,12 @@ jobs:
           port: 21
           local-dir: ./dist/
           server-dir: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
-          # Laedt nur geaenderte Dateien hoch; der Zustand liegt in
+          # Normalfall: nur geaenderte Dateien; der Zustand liegt in
           # .ftp-deploy-sync-state.json auf dem Server.
+          # Mit "neu_aufsetzen" wird der Zielordner vorher komplett geleert –
+          # dafuer gedacht, Altlasten (z. B. den falsch hochgeladenen Ordner
+          # /pospurtal/) restlos zu entfernen.
+          dangerous-clean-slate: ${{ inputs.neu_aufsetzen == true }}
           log-level: minimal
           exclude: |
             **/.git*

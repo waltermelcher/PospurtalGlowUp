@@ -1,3 +1,8 @@
+export interface Werk {
+  komponist: string;
+  titel: string;
+}
+
 export interface Programm {
   id: string;
   eyebrow: string;
@@ -11,6 +16,11 @@ export interface Programm {
   /** Optionale YouTube-ID: zeigt statt des Bildes ein abspielbares Video */
   video?: string;
   paragraphs: string[];
+  /** Optionale Werkauswahl, erscheint unter den Absätzen */
+  werke?: {
+    heading: string;
+    items: Werk[];
+  };
 }
 
 export const programme: Programm[] = [
@@ -44,5 +54,14 @@ export const programme: Programm[] = [
       'Auf dem Programm stehen romantische und klassische Werke sowie berühmte Bearbeitungen, die eigens für diese Besetzung eine ganz neue Klangsprache entfalten. Vertraute Melodien erklingen in ungewohnter Farbe, große Musik wird auf besondere Weise neu erlebbar.',
       'Ein Konzertabend, der die Akustik des Raumes zum Mitspieler macht und zeigt, wie viel Orchester in fünf Musikern stecken kann.',
     ],
+    werke: {
+      heading: 'Zu hören sind unter anderem',
+      items: [
+        { komponist: 'Richard Wagner', titel: 'Gebet der Elisabeth' },
+        { komponist: 'Felix Mendelssohn Bartholdy', titel: 'Lobgesang, op. 52' },
+        { komponist: 'Anton Bruckner', titel: 'Christus factus est' },
+        { komponist: 'Zsolt Gárdonyi', titel: 'Fantasie' },
+      ],
+    },
   },
 ];

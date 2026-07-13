@@ -7,7 +7,7 @@ export interface Props extends Programm {
 }
 
 const {
-  id, eyebrow, title, tagline, image, imageAlt, width, height, video, paragraphs,
+  id, eyebrow, title, tagline, image, imageAlt, width, height, video, paragraphs, werke,
   alternate = false,
 } = Astro.props;
 
@@ -22,6 +22,20 @@ const ratio = `${width} / ${height}`;
       <h2>{title}</h2>
       <p class="programm-tag">{tagline}</p>
       {paragraphs.map((text) => <p class="programm-body">{text}</p>)}
+
+      {werke && (
+        <div class="programm-werke">
+          <h3>{werke.heading}</h3>
+          <ul>
+            {werke.items.map((werk) => (
+              <li>
+                <span class="werk-komponist">{werk.komponist}</span>
+                <span class="werk-titel">{werk.titel}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <a href="#kontakt" class="btn btn-primary programm-cta">
         Anfragen
@@ -91,6 +105,40 @@ const ratio = `${width} / ${height}`;
     color: var(--text-soft);
     margin-bottom: 1.1rem;
   }
+  .programm-werke {
+    margin-top: 2rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line-soft);
+  }
+  .programm-werke h3 {
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass-soft);
+    margin-bottom: 1.1rem;
+  }
+  .programm-werke ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .programm-werke li {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 0.4rem 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .programm-werke li:last-child { border-bottom: none; padding-bottom: 0; }
+  .werk-komponist { color: var(--text-soft); }
+  .werk-titel {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--brass-soft);
+  }
+
   .programm-cta { margin-top: 1.6rem; }
 
   .programm-media { position: relative; }
@@ -158,6 +206,10 @@ const ratio = `${width} / ${height}`;
     .programm.alt .programm-text { order: 2; }
     .programm-play { width: 60px; height: 60px; }
     .programm-play svg { width: 24px; height: 24px; }
+  }
+
+  @media (max-width: 520px) {
+    .programm-werke li { grid-template-columns: 1fr; gap: 0.15rem; }
   }
 </style>
 

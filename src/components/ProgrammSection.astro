@@ -23,20 +23,6 @@ const ratio = `${width} / ${height}`;
       <p class="programm-tag">{tagline}</p>
       {paragraphs.map((text) => <p class="programm-body">{text}</p>)}
 
-      {werke && (
-        <div class="programm-werke">
-          <h3>{werke.heading}</h3>
-          <ul>
-            {werke.items.map((werk) => (
-              <li>
-                <span class="werk-komponist">{werk.komponist}</span>
-                <span class="werk-titel">{werk.titel}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       <a href="#kontakt" class="btn btn-primary programm-cta">
         Anfragen
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -67,6 +53,20 @@ const ratio = `${width} / ${height}`;
         />
       )}
     </div>
+
+    {werke && (
+      <div class="programm-werke" data-reveal>
+        <h3>{werke.heading}</h3>
+        <ul>
+          {werke.items.map((werk) => (
+            <li>
+              <span class="werk-komponist">{werk.komponist}</span>
+              <span class="werk-titel">{werk.titel}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
   </div>
 </section>
 
@@ -77,16 +77,24 @@ const ratio = `${width} / ${height}`;
     border-block: 1px solid var(--line-soft);
   }
 
+  /* Text in der einen Spalte, Medien + Werkauswahl gestapelt in der anderen */
   .programm-grid {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
-    gap: clamp(2.5rem, 6vw, 5.5rem);
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(2.5rem, 6vw, 5.5rem);
+    row-gap: 2.2rem;
     align-items: center;
   }
+  .programm-text { grid-column: 1; grid-row: 1 / span 2; }
+  .programm-media { grid-column: 2; grid-row: 1; }
+  .programm-werke { grid-column: 2; grid-row: 2; align-self: start; }
+
   /* Medien links, Text rechts */
   .programm.alt .programm-grid { grid-template-columns: 0.95fr 1.05fr; }
-  .programm.alt .programm-text { order: 2; }
-  .programm.alt .programm-media { order: 1; }
+  .programm.alt .programm-text { grid-column: 2; }
+  .programm.alt .programm-media,
+  .programm.alt .programm-werke { grid-column: 1; }
 
   .programm-text h2 {
     font-size: clamp(2rem, 5vw, 3.4rem);
@@ -104,11 +112,6 @@ const ratio = `${width} / ${height}`;
   .programm-body {
     color: var(--text-soft);
     margin-bottom: 1.1rem;
-  }
-  .programm-werke {
-    margin-top: 2rem;
-    padding-top: 1.6rem;
-    border-top: 1px solid var(--line-soft);
   }
   .programm-werke h3 {
     font-size: 0.78rem;
@@ -198,12 +201,25 @@ const ratio = `${width} / ${height}`;
 
   @media (max-width: 860px) {
     .programm-grid,
-    .programm.alt .programm-grid { grid-template-columns: 1fr; }
-    /* auf Mobile immer Medien oben, Text darunter */
+    .programm.alt .programm-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      row-gap: 2.5rem;
+    }
+    /* auf Mobile untereinander: Medien, Text, Werkauswahl */
+    .programm .programm-media,
+    .programm.alt .programm-media,
+    .programm .programm-text,
+    .programm.alt .programm-text,
+    .programm .programm-werke,
+    .programm.alt .programm-werke { grid-column: 1; grid-row: auto; }
     .programm .programm-media,
     .programm.alt .programm-media { order: 1; }
     .programm .programm-text,
     .programm.alt .programm-text { order: 2; }
+    .programm .programm-werke,
+    .programm.alt .programm-werke { order: 3; }
+
     .programm-play { width: 60px; height: 60px; }
     .programm-play svg { width: 24px; height: 24px; }
   }

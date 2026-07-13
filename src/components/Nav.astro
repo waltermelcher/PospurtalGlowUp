@@ -28,8 +28,10 @@ const links = [
   </div>
 
   <div class="nav-mobile" id="navMobile">
-    {links.map((l) => <a href={l.href} class="nav-mobile-link">{l.label}</a>)}
-    <a href="mailto:hallo@pospurtal.de" class="btn btn-primary nav-mobile-cta">Anfragen</a>
+    <nav class="nav-mobile-inner container" aria-label="Menü">
+      {links.map((l) => <a href={l.href} class="nav-mobile-link">{l.label}</a>)}
+      <a href="mailto:hallo@pospurtal.de" class="btn btn-primary nav-mobile-cta">Anfragen</a>
+    </nav>
   </div>
 </header>
 
@@ -108,27 +110,47 @@ const links = [
   .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+  /* Kompaktes Panel, das unter der Kopfzeile aufklappt – kein Vollbild-Overlay */
   .nav-mobile {
-    position: fixed;
-    inset: 0;
-    background: rgba(16, 13, 12, 0.97);
-    backdrop-filter: blur(16px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(20, 17, 16, 0.96);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-block: 1px solid var(--line-soft);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.28s var(--ease), transform 0.28s var(--ease), visibility 0.28s;
+  }
+  .nav-mobile.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .nav-mobile-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.6rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s var(--ease);
+    padding-block: 0.4rem 1.1rem;
   }
-  .nav-mobile.open { opacity: 1; pointer-events: auto; }
   .nav-mobile-link {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text-soft);
+    padding-block: 0.95rem;
+    border-bottom: 1px solid var(--line-soft);
+    transition: color 0.25s var(--ease);
   }
-  .nav-mobile-cta { margin-top: 1rem; }
+  .nav-mobile-link:active { color: var(--brass-soft); }
+  .nav-mobile-cta {
+    justify-content: center;
+    margin-top: 1.1rem;
+    padding-block: 0.8rem;
+    font-size: 0.9rem;
+  }
 
   @media (max-width: 860px) {
     .nav-links, .nav-cta { display: none; }
@@ -145,16 +167,22 @@ const links = [
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  toggle?.addEventListener('click', () => {
-    const open = mobile?.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(open));
-    document.body.style.overflow = open ? 'hidden' : '';
+  const setMenu = (open: boolean) => {
+    mobile?.classList.toggle('open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  };
+
+  toggle?.addEventListener('click', () => setMenu(!mobile?.classList.contains('open')));
+
+  mobile?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+  // Klick daneben oder Escape schließt das Panel
+  document.addEventListener('click', (e) => {
+    if (!mobile?.classList.contains('open')) return;
+    if (!nav?.contains(e.target as Node)) setMenu(false);
   });
-  mobile?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', () => {
-      mobile.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    })
-  );
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
+  });
 </script>

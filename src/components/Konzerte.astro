@@ -8,8 +8,6 @@ interface Konzert {
   city?: string;
   region?: string;
   program: string;
-  /** Mitwirkende, wenn das Konzert gemeinsam mit anderen gestaltet wird */
-  gemeinsamMit?: string;
   venue?: string;
   address?: string;
 }
@@ -30,8 +28,7 @@ const concerts: Konzert[] = [
   {
     day: '07', month: 'Dez', year: '2026', time: '19:30 Uhr',
     city: 'Mainz',
-    program: 'Weihnachtskonzert',
-    gemeinsamMit: 'Gemeinsam mit dem Vokalensemble Enona',
+    program: 'Weihnachtskonzert mit dem Vokalensemble Enona',
     address: 'Am Gonsenheimer Spieß 1, 55122 Mainz',
   },
   {
@@ -59,7 +56,6 @@ const concerts: Konzert[] = [
           </div>
           <div class="konzert-main">
             <h3 class="konzert-program">{c.program}</h3>
-            {c.gemeinsamMit && <p class="konzert-partner">{c.gemeinsamMit}</p>}
             {c.venue || c.address ? (
               <p class="konzert-venue">{[c.venue, c.address].filter(Boolean).join(' · ')}</p>
             ) : (
@@ -133,13 +129,6 @@ const concerts: Konzert[] = [
   .konzert-program {
     font-size: clamp(1.3rem, 2.6vw, 1.7rem);
     font-weight: 600;
-    margin-bottom: 0.35rem;
-  }
-  .konzert-partner {
-    font-family: var(--font-serif);
-    font-style: italic;
-    color: var(--brass-soft);
-    font-size: 1rem;
     margin-bottom: 0.35rem;
   }
   .konzert-venue { color: var(--text-soft); font-size: 0.98rem; }

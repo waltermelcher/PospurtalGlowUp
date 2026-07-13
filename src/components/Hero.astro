@@ -1,10 +1,18 @@
 ---
-const base = import.meta.env.BASE_URL;
+import { Image } from 'astro:assets';
+import header from '../assets/header.webp';
 ---
 
 <section class="hero" id="top">
   <div class="hero-bg">
-    <img src={`${base}images/header.webp`} alt="Pospurtal Posaunenquartett" fetchpriority="high" />
+    <Image
+      src={header}
+      alt="Das Posaunenquartett Pospurtal in einer Kirche"
+      widths={[800, 1200, 1800, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
     <div class="hero-overlay"></div>
     <div class="hero-vignette"></div>
   </div>

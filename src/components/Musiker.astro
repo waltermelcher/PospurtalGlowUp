@@ -1,28 +1,29 @@
 ---
-const base = import.meta.env.BASE_URL;
+import { Image } from 'astro:assets';
+import kessler from '../assets/portrait_kessler.webp';
+import pausch from '../assets/portrait_pausch.webp';
+import melcher from '../assets/portrait_melcher.webp';
+import mueller from '../assets/portrait_mueller.webp';
+
 const members = [
   {
     name: 'Thomas Keßler',
-    role: 'Musikalischer Koordinator',
-    img: `${base}images/portrait_kessler.webp`,
+    img: kessler,
     bio: 'Thomas Keßler ist ein leidenschaftlicher Posaunist mit einem feinen Gespür für Klang und Präzision. Als musikalischer Koordinator von Pospurtal sorgt er für die Auswahl des Repertoires und die Organisation der Proben. Sein virtuoses Spiel, insbesondere in den hohen Lagen, verleiht dem Quartett eine strahlende Brillanz.',
   },
   {
     name: 'Michael Pausch',
-    role: 'Qualitätssicherung',
-    img: `${base}images/portrait_pausch.webp`,
+    img: pausch,
     bio: 'Michael Pausch bringt als erfahrener Posaunist Struktur und Klarheit in das Ensemble. Mit einem feinen Ohr für Details und einem hohen Anspruch an musikalische Qualität unterstützt er Pospurtal als kritisches und motivierendes Mitglied. Seine pädagogische Erfahrung fließt in jede Probe ein.',
   },
   {
     name: 'Walter Melcher',
-    role: 'Kommunikation & Marketing',
-    img: `${base}images/portrait_melcher.webp`,
+    img: melcher,
     bio: 'Walter Melcher bereichert Pospurtal seit 2024 mit seinem facettenreichen Spiel und seiner musikalischen Vielseitigkeit. Trotz weiter Anreise ist seine Leidenschaft für die Posaune in jeder Probe spürbar. Seine klangliche Präzision macht ihn zu einer unverzichtbaren Säule des Ensembles.',
   },
   {
     name: 'Stephan Müller',
-    role: 'Bassposaune',
-    img: `${base}images/portrait_mueller.webp`,
+    img: mueller,
     bio: 'Stephan Müller überzeugt mit tiefen, kraftvollen Klängen auf der Bassposaune. Seine Begeisterung für Musik und sein erfrischender Enthusiasmus bringen Dynamik und Tiefe ins Quartett. Mit seinem vollen, warmen Sound trägt er wesentlich zur klanglichen Basis des Ensembles bei.',
   },
 ];
@@ -40,7 +41,7 @@ const members = [
       {members.map((m) => (
         <article class="musiker-card" data-reveal>
           <div class="musiker-photo">
-            <img src={m.img} alt={`Portrait ${m.name}`} loading="lazy" width="500" height="600" />
+            <Image src={m.img} alt={`${m.name}, Posaunist bei Pospurtal`} widths={[400, 700]} sizes="(max-width: 700px) 100vw, (max-width: 900px) 50vw, 280px" loading="lazy" />
           </div>
           <div class="musiker-info">
             <h3 class="musiker-name">{m.name}</h3>

@@ -1,41 +1,5 @@
 ---
-/** Ort und Uhrzeit leer lassen, solange sie noch nicht feststehen. */
-interface Konzert {
-  day: string;
-  month: string;
-  year: string;
-  time?: string;
-  city?: string;
-  region?: string;
-  program: string;
-  venue?: string;
-  address?: string;
-}
-
-const concerts: Konzert[] = [
-  {
-    day: '30', month: 'Sep', year: '2026', time: '18:00 Uhr',
-    city: 'Mainz',
-    program: 'Wenn es Rosen sind, werden sie blühen',
-    venue: 'Johannes Gutenberg-Universität Mainz', address: 'Jakob-Welder-Weg 28, 55128 Mainz',
-  },
-  {
-    day: '03', month: 'Okt', year: '2026', time: '18:00 Uhr',
-    city: 'Groß-Gerau',
-    program: 'Wenn es Rosen sind, werden sie blühen',
-    venue: 'Kreistag Groß-Gerau', address: 'Wilhelm-Seipp-Straße 4, 64521 Groß-Gerau',
-  },
-  {
-    day: '07', month: 'Dez', year: '2026', time: '19:30 Uhr',
-    city: 'Mainz',
-    program: 'Weihnachtskonzert mit dem Vokalensemble Enona',
-    address: 'Am Gonsenheimer Spieß 1, 55122 Mainz',
-  },
-  {
-    day: '20', month: 'Dez', year: '2026',
-    program: 'Zehn Jahre Pospurtal — Premiere des Jubiläumsprogramms',
-  },
-];
+import { konzerte, datumsteile } from '../data/konzerte';
 ---
 
 <section class="konzerte section" id="konzerte">
@@ -47,33 +11,34 @@ const concerts: Konzert[] = [
     </div>
 
     <ul class="konzert-list">
-      {concerts.map((c) => (
-        <li class="konzert" data-reveal>
-          <div class="konzert-date">
-            <span class="konzert-day">{c.day}</span>
-            <span class="konzert-month">{c.month}</span>
-            <span class="konzert-year">{c.year}</span>
-          </div>
-          <div class="konzert-main">
-            <h3 class="konzert-program">{c.program}</h3>
-            {c.venue || c.address ? (
-              <p class="konzert-venue">{[c.venue, c.address].filter(Boolean).join(' · ')}</p>
-            ) : (
-              <p class="konzert-venue offen">Ort wird noch bekannt gegeben</p>
-            )}
-          </div>
-          <div class="konzert-meta">
-            {c.city && (
-              <span class="konzert-city">{c.city}{c.region ? ` (${c.region})` : ''}</span>
-            )}
-            {c.time ? (
-              <span class="konzert-time">{c.time}</span>
-            ) : (
-              <span class="konzert-time offen">Uhrzeit folgt</span>
-            )}
-          </div>
-        </li>
-      ))}
+      {konzerte.map((c) => {
+        const { day, month, year } = datumsteile(c.date);
+        return (
+          <li class="konzert" data-reveal>
+            <div class="konzert-date">
+              <span class="konzert-day">{day}</span>
+              <span class="konzert-month">{month}</span>
+              <span class="konzert-year">{year}</span>
+            </div>
+            <div class="konzert-main">
+              <h3 class="konzert-program">{c.program}</h3>
+              {c.venue || c.address ? (
+                <p class="konzert-venue">{[c.venue, c.address].filter(Boolean).join(' · ')}</p>
+              ) : (
+                <p class="konzert-venue offen">Ort wird noch bekannt gegeben</p>
+              )}
+            </div>
+            <div class="konzert-meta">
+              {c.city && <span class="konzert-city">{c.city}</span>}
+              {c.time ? (
+                <span class="konzert-time">{c.time} Uhr</span>
+              ) : (
+                <span class="konzert-time offen">Uhrzeit folgt</span>
+              )}
+            </div>
+          </li>
+        );
+      })}
     </ul>
   </div>
 </section>

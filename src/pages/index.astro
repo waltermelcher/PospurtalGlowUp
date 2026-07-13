@@ -11,9 +11,57 @@ import Medien from '../components/Medien.astro';
 import Kontakt from '../components/Kontakt.astro';
 import Footer from '../components/Footer.astro';
 import { programme } from '../data/programme';
+import { konzerte } from '../data/konzerte';
+import header from '../assets/header.webp';
+
+const origin = Astro.site!.origin;
+const startseite = new URL(import.meta.env.BASE_URL, Astro.site).toString();
+
+// Strukturierte Daten: Google versteht damit die Musikgruppe und die Termine als
+// Konzerte. Nur Termine mit Adresse – schema.org verlangt einen Ort, und geraten
+// wird hier nicht. Der Termin ohne Ort steht weiterhin sichtbar auf der Seite.
+const events = konzerte
+  .filter((k) => k.address)
+  .map((k) => ({
+    '@type': 'MusicEvent',
+    name: k.program,
+    startDate: k.time ? `${k.date}T${k.time}` : k.date,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: k.venue ?? k.city,
+      address: { '@type': 'PostalAddress', streetAddress: k.address, addressCountry: 'DE' },
+    },
+    performer: { '@type': 'MusicGroup', name: 'Pospurtal' },
+  }));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MusicGroup',
+  name: 'Pospurtal',
+  alternateName: 'Pospurtal – Das Rheinhessische Posaunenquartett',
+  description:
+    'Posaunenquartett aus Rheinhessen, gegründet 2017. Repertoire von Klassik über Romantik und Filmmusik bis Jazz.',
+  url: startseite,
+  image: origin + header.src,
+  email: 'hallo@pospurtal.de',
+  foundingDate: '2017',
+  genre: ['Klassik', 'Kammermusik', 'Blechbläsermusik'],
+  sameAs: ['https://www.instagram.com/pospurtal/', 'https://www.facebook.com/Pospurtal'],
+  member: [
+    { '@type': 'Person', name: 'Thomas Keßler' },
+    { '@type': 'Person', name: 'Michael Pausch' },
+    { '@type': 'Person', name: 'Walter Melcher' },
+    { '@type': 'Person', name: 'Stephan Müller' },
+  ],
+  event: events,
+};
 ---
 
 <Base>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
   <Nav />
   <main>
     <Hero />

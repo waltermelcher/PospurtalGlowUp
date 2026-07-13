@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import header from '../assets/header.webp';
 
 export interface Props {
   title?: string;
@@ -13,7 +14,7 @@ const {
 
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const ogImage = new URL(`${base}images/header.webp`, Astro.site).toString();
+const ogImage = new URL(header.src, Astro.site).toString();
 
 // Nur auf diesen (Produktions-)Domains darf indexiert werden.
 // Auf allen anderen Hosts (GitHub-Pages-Vorschau, Preview, localhost) wird
@@ -49,15 +50,19 @@ const productionHosts = ['pospurtal.de', 'www.pospurtal.de'];
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pospurtal" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Das Posaunenquartett Pospurtal" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="de_DE" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/webp" href={`${base}images/logo_black.webp`} />
     <meta name="theme-color" content="#141110" />
 
+    <slot name="head" />
   </head>
   <body>
     <slot />

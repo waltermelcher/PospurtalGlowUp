@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
 
-// Der Standard ist die Produktion. Damit liefert jeder Host, der einfach
-// "astro build" bzw. "npm run build" ausfuehrt (Cloudflare, Hostinger-CI,
-// lokal), automatisch die richtige Fassung: Domain www.pospurtal.de, Pfade ab /.
+// Der Standard ist die Produktion. Damit liefert jeder Build – ob bei
+// Cloudflare oder lokal – automatisch die richtige Fassung:
+// Domain www.pospurtal.de, Pfade ab /.
 //
 // Nur die GitHub-Pages-Vorschau ist der Sonderfall. Sie laeuft unter
 // waltermelcher.github.io/pospurtal/ und darf nicht indexiert werden; ihr

@@ -5,7 +5,7 @@ const base = import.meta.env.BASE_URL;
 <section class="about section" id="ueber">
   <div class="container about-grid">
     <div class="about-media" data-reveal>
-      <img src={`${base}images/selfie.webp`} alt="Das Quartett Pospurtal" loading="lazy" width="900" height="700" />
+      <img src={`${base}images/hochkant_1.webp`} alt="Pospurtal im Konzert" loading="lazy" width="500" height="570" />
     </div>
 
     <div class="about-text" data-reveal>
@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL;
   .about-media img {
     width: 100%;
     border-radius: var(--radius);
-    aspect-ratio: 4 / 3.2;
+    aspect-ratio: 500 / 570;   /* echtes Bildverhältnis – kein Beschnitt */
     object-fit: cover;
     box-shadow: 0 40px 80px -30px rgba(0,0,0,0.7);
   }

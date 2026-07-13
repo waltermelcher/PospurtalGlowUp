@@ -1,21 +1,16 @@
 import { defineConfig } from 'astro/config';
 
-// Ein Codestand, zwei Ausgaben – Unterschied ist nur site/base:
+// Der Standard ist die Produktion. Damit liefert jeder Host, der einfach
+// "astro build" bzw. "npm run build" ausfuehrt (Cloudflare, Hostinger-CI,
+// lokal), automatisch die richtige Fassung: Domain www.pospurtal.de, Pfade ab /.
 //
-//   Produktion (www.pospurtal.de, Pfade ab /)
-//     npm run build:prod            -> setzt DEPLOY_TARGET=production
-//     Cloudflare Pages              -> wird an CF_PAGES automatisch erkannt
-//
-//   GitHub-Pages-Vorschau (waltermelcher.github.io/pospurtal/)
-//     npm run build                 -> Standard, nicht indexierbar
-//
-// Wichtig: Wird die Produktionsfassung mit dem falschen Ziel gebaut, zeigen
-// alle Asset-Pfade auf /pospurtal/ und die Seite laedt ohne Design.
-const isProd =
-  process.env.DEPLOY_TARGET === 'production' || process.env.CF_PAGES === '1';
+// Nur die GitHub-Pages-Vorschau ist der Sonderfall. Sie laeuft unter
+// waltermelcher.github.io/pospurtal/ und darf nicht indexiert werden; ihr
+// Workflow setzt dafuer DEPLOY_TARGET=github.
+const isPreview = process.env.DEPLOY_TARGET === 'github';
 
 export default defineConfig({
-  site: isProd ? 'https://www.pospurtal.de' : 'https://waltermelcher.github.io',
-  base: isProd ? '/' : '/pospurtal/',
+  site: isPreview ? 'https://waltermelcher.github.io' : 'https://www.pospurtal.de',
+  base: isPreview ? '/pospurtal/' : '/',
   compressHTML: true,
 });

@@ -26,6 +26,10 @@ jobs:
         with:
           # Astro 7 verlangt Node >= 22.12; die Action baut sonst mit Node 20.
           node-version: 22
+        env:
+          # Vorschau-Fassung: Unterpfad /pospurtal/ und noindex.
+          # Ohne diese Variable wuerde die Produktionsfassung gebaut.
+          DEPLOY_TARGET: github
 
   deploy:
     needs: build

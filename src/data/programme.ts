@@ -59,7 +59,7 @@ export const programme: Programm[] = [
       items: [
         { komponist: 'Richard Wagner', titel: 'Gebet der Elisabeth' },
         { komponist: 'Felix Mendelssohn Bartholdy', titel: 'Lobgesang, op. 52' },
-        { komponist: 'Anton Bruckner', titel: 'Scherzo aus der 1. Symphonie c-Moll (Fassung 1877)' },
+        { komponist: 'Anton Bruckner', titel: 'Scherzo aus der 1. Symphonie c-Moll' },
         { komponist: 'Zsolt Gárdonyi', titel: 'Fantasie' },
       ],
     },

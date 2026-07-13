@@ -1,28 +1,39 @@
 ---
-const concerts = [
-  {
-    day: '01', month: 'Mai', year: '2026', time: '19:30 Uhr',
-    city: 'Asperg', region: 'Ludwigsburg',
-    program: 'Romantisches Konzert mit Orgel',
-    venue: 'Michaelskirche', address: 'Uhlandstr. 3, 71679 Asperg',
-  },
-  {
-    day: '02', month: 'Mai', year: '2026', time: '17:00 Uhr',
-    city: 'Sindelfingen', region: '',
-    program: 'Romantisches Konzert mit Orgel',
-    venue: 'Martinskirche', address: 'Stiftstraße 1, 71063 Sindelfingen',
-  },
+/** Ort und Uhrzeit leer lassen, solange sie noch nicht feststehen. */
+interface Konzert {
+  day: string;
+  month: string;
+  year: string;
+  time?: string;
+  city?: string;
+  region?: string;
+  program: string;
+  venue?: string;
+  address?: string;
+}
+
+const concerts: Konzert[] = [
   {
     day: '30', month: 'Sep', year: '2026', time: '18:00 Uhr',
-    city: 'Mainz', region: '',
+    city: 'Mainz',
     program: 'Wenn es Rosen sind, werden sie blühen',
     venue: 'Johannes Gutenberg-Universität Mainz', address: 'Jakob-Welder-Weg 28, 55128 Mainz',
   },
   {
     day: '03', month: 'Okt', year: '2026', time: '18:00 Uhr',
-    city: 'Groß-Gerau', region: '',
+    city: 'Groß-Gerau',
     program: 'Wenn es Rosen sind, werden sie blühen',
     venue: 'Kreistag Groß-Gerau', address: 'Wilhelm-Seipp-Straße 4, 64521 Groß-Gerau',
+  },
+  {
+    day: '07', month: 'Dez', year: '2026', time: '19:30 Uhr',
+    city: 'Mainz',
+    program: 'Weihnachtskonzert',
+    venue: 'Enona', address: 'Am Gonsenheimer Spieß 1, 55122 Mainz',
+  },
+  {
+    day: '20', month: 'Dez', year: '2026',
+    program: 'Zehn Jahre Pospurtal — Premiere des Jubiläumsprogramms',
   },
 ];
 ---
@@ -45,11 +56,21 @@ const concerts = [
           </div>
           <div class="konzert-main">
             <h3 class="konzert-program">{c.program}</h3>
-            <p class="konzert-venue">{c.venue}{c.address ? ` · ${c.address}` : ''}</p>
+            {c.venue ? (
+              <p class="konzert-venue">{c.venue}{c.address ? ` · ${c.address}` : ''}</p>
+            ) : (
+              <p class="konzert-venue offen">Ort wird noch bekannt gegeben</p>
+            )}
           </div>
           <div class="konzert-meta">
-            <span class="konzert-city">{c.city}{c.region ? ` (${c.region})` : ''}</span>
-            <span class="konzert-time">{c.time}</span>
+            {c.city && (
+              <span class="konzert-city">{c.city}{c.region ? ` (${c.region})` : ''}</span>
+            )}
+            {c.time ? (
+              <span class="konzert-time">{c.time}</span>
+            ) : (
+              <span class="konzert-time offen">Uhrzeit folgt</span>
+            )}
           </div>
         </li>
       ))}
@@ -111,6 +132,15 @@ const concerts = [
     margin-bottom: 0.35rem;
   }
   .konzert-venue { color: var(--text-soft); font-size: 0.98rem; }
+
+  /* Noch offene Angaben: bewusst zurückhaltend, damit sie nicht wie Fakten wirken */
+  .konzert-venue.offen { color: var(--text-mute); font-style: italic; }
+  .konzert-time.offen {
+    color: var(--text-mute);
+    background: transparent;
+    border-style: dashed;
+    font-style: italic;
+  }
 
   .konzert-meta {
     display: flex;

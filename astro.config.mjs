@@ -1,5 +1,7 @@
 import { defineConfig } from 'astro/config';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // Ein Codestand, zwei Ausgaben – Unterschied ist nur site/base:
 //
 //   Produktion (www.pospurtal.de, Pfade ab /)
@@ -18,4 +20,5 @@ export default defineConfig({
   site: isProd ? 'https://www.pospurtal.de' : 'https://waltermelcher.github.io',
   base: isProd ? '/' : '/pospurtal/',
   compressHTML: true,
+  adapter: cloudflare(),
 });

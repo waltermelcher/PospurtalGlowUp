@@ -6,34 +6,38 @@ Sitemap) ist bereits umgesetzt und live.
 
 ---
 
-## B1 — Alte Domain umleiten (WICHTIGSTER PUNKT, zuerst)
+## B1 — Alte Domain umleiten (geringe Dringlichkeit)
 
-`pospurtal-rhp.de` ist noch online und in Google indexiert. Sie zeigt veraltete
-Infos (frühere Besetzung) und splittet die Sichtbarkeit von zwei Domains auf.
-Sie liegt in deinem Cloudflare-Account.
+**Stand geprüft:** `pospurtal-rhp.de` liefert live auf allen Pfaden nur noch
+leere Seiten (0 Byte). Die alten Inhalte (frühere Besetzung usw.) sind **nicht
+mehr live** — was in Google auftaucht, ist nur noch der veraltete Index, der von
+selbst verfällt. Die Domain läuft über Cloudflare-Nameserver, aber **nicht in
+deinem** Cloudflare-Account (vermutlich der des früheren Dienstleisters). Du
+kannst dort also nichts einstellen.
 
-**Weiterleitung einrichten (alles → neue Startseite, 301):**
+**Kontrolle liegt beim Registrar** (wo die Domain registriert/bezahlt wird).
+Zuerst herausfinden, wo das ist: Wix-Konto prüfen (der alte Seitenbauer hat die
+Domain evtl. dort verwaltet), sonst alte Rechnungen/E-Mails nach „pospurtal-rhp"
+durchsuchen (IONOS, Strato, united-domains, GoDaddy …).
 
-1. Cloudflare-Dashboard → Domain **pospurtal-rhp.de** wählen.
-2. Links im Menü: **Rules → Redirect Rules → Create rule**.
-3. Name: z. B. „Umleitung auf pospurtal.de".
-4. **When incoming requests match:** „All incoming requests".
-5. **Then / URL Redirect:**
-   - Type: **Dynamic**
-   - Expression: `concat("https://www.pospurtal.de/")`
-   - Status code: **301** (permanent)
-   - Haken bei „Preserve query string" ist egal, kann aus bleiben.
-6. **Deploy**.
+Sobald du Zugriff auf den Registrar hast, zwei Wege:
 
-Warum auf die Startseite und nicht 1:1: Die alten Pfade (z. B.
-`/musiker/marius-schäfer`) gibt es auf der neuen Seite nicht — eine pauschale
-Weiterleitung auf die Startseite ist hier korrekt und vermeidet 404-Ketten.
+- **Weg A – Domain-Weiterleitung beim Registrar** (einfachste Lösung): Viele
+  Registrare bieten „Weiterleitung/Forwarding". Dazu die Nameserver von der
+  fremden Cloudflare (beth/rocky.ns.cloudflare.com) auf die
+  **Standard-Nameserver des Registrars** zurücksetzen, dann eine 301-Weiterleitung
+  auf `https://www.pospurtal.de/` einrichten.
 
-**Danach testen:** `https://pospurtal-rhp.de/musiker` im Browser → muss auf
-`https://www.pospurtal.de/` springen.
+- **Weg B – in deine eigene Cloudflare holen:** `pospurtal-rhp.de` in deinem
+  Cloudflare als neue Website hinzufügen, die zwei angezeigten Nameserver beim
+  Registrar eintragen, nach Umstellung eine Redirect Rule auf
+  `https://www.pospurtal.de/` (301) anlegen.
 
-**Wichtig:** Die Domain weiter verlängern, nicht auslaufen lassen — sonst geht
-die Weiterleitung (und damit die aufgebaute Linkkraft) verloren.
+**Ehrliche Einordnung:** Weil die Seite bereits leer ist, ist das ein
+Aufräum-Schritt, kein Notfall. Wenn der Registrar-Zugang mühsam ist, kannst du
+die Domain auch einfach aus dem Google-Index fallen lassen (passiert über Wochen
+von selbst; per Search-Console-Removal beschleunigbar) und dich auf B2
+konzentrieren. Domain nicht auslaufen lassen, falls du sie später umleiten willst.
 
 ---
 

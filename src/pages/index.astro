@@ -17,6 +17,17 @@ import header from '../assets/header.webp';
 const origin = Astro.site!.origin;
 const startseite = new URL(import.meta.env.BASE_URL, Astro.site).toString();
 
+const pospurtal = { '@type': 'MusicGroup', name: 'Pospurtal', url: startseite };
+
+// Zerlegt "Jakob-Welder-Weg 28, 55128 Mainz" in Straße, PLZ und Ort.
+// Fällt auf die reine Zeichenkette zurück, falls das Muster nicht passt.
+function postalAddress(address: string, city?: string) {
+  const m = address.match(/^(.*),\s*(\d{5})\s+(.+)$/);
+  return m
+    ? { '@type': 'PostalAddress', streetAddress: m[1], postalCode: m[2], addressLocality: m[3], addressCountry: 'DE' }
+    : { '@type': 'PostalAddress', streetAddress: address, addressLocality: city, addressCountry: 'DE' };
+}
+
 // Strukturierte Daten: Google versteht damit die Musikgruppe und die Termine als
 // Konzerte. Nur Termine mit Adresse – schema.org verlangt einen Ort, und geraten
 // wird hier nicht. Der Termin ohne Ort steht weiterhin sichtbar auf der Seite.
@@ -31,9 +42,10 @@ const events = konzerte
     location: {
       '@type': 'Place',
       name: k.venue ?? k.city,
-      address: { '@type': 'PostalAddress', streetAddress: k.address, addressCountry: 'DE' },
+      address: postalAddress(k.address!, k.city),
     },
-    performer: { '@type': 'MusicGroup', name: 'Pospurtal' },
+    performer: pospurtal,
+    organizer: pospurtal,
   }));
 
 const jsonLd = {
@@ -48,6 +60,13 @@ const jsonLd = {
   email: 'hallo@pospurtal.de',
   foundingDate: '2017',
   genre: ['Klassik', 'Kammermusik', 'Blechbläsermusik'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Mainz',
+    postalCode: '55116',
+    addressCountry: 'DE',
+  },
+  areaServed: ['Rheinhessen', 'Rhein-Main', 'Mainz'],
   sameAs: ['https://www.instagram.com/pospurtal/', 'https://www.facebook.com/Pospurtal'],
   member: [
     { '@type': 'Person', name: 'Thomas Keßler' },
@@ -59,7 +78,10 @@ const jsonLd = {
 };
 ---
 
-<Base>
+<Base
+  title="Pospurtal – Posaunenquartett aus Mainz | Konzerte & Buchung"
+  description="Das rheinhessische Posaunenquartett aus Mainz: Kirchenkonzerte mit Orgel, festliche Umrahmungen und Konzerte in Rheinhessen und Rhein-Main. Jetzt anfragen."
+>
   <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 
   <Nav />

@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 
-const seiten = ['', 'impressum', 'datenschutz'];
+// Mit Trailing Slash – so wie die Seiten tatsächlich ausgeliefert werden
+// und wie die Canonical-URL lautet (kein Redirect-Umweg).
+const seiten = ['', 'impressum/', 'datenschutz/'];
 
 export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL;

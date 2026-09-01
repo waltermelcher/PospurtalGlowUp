@@ -14,7 +14,7 @@ export interface Konzert {
 export const konzerte: Konzert[] = [
   {
     date: '2026-09-30',
-    time: '18:00',
+    time: '19:30',
     program: 'Wenn es Rosen sind, werden sie blühen',
     venue: 'Johannes Gutenberg-Universität Mainz',
     address: 'Jakob-Welder-Weg 28, 55128 Mainz',
